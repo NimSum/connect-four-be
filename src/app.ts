@@ -1,2 +1,1 @@
-console.log('Hello');
-const something:string = 'HELLO';
+const { mongoURI } = require('../config/keys');
