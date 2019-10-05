@@ -3,7 +3,8 @@ const { mongoURI } = require('../config/keys');
 
 mongoose.connect(
   mongoURI,
-  {
-    useMongoClient: true
+  { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   }
 )
