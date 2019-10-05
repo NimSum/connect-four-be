@@ -1,0 +1,44 @@
+*, 
+*:before, 
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+}
+
+section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.main-grid-container {
+  height: 60vh;
+  width: 70vh;
+  margin: 0;
+  padding: 15px;
+  display: grid;
+  list-style-type: none;
+  grid-gap: 8px;
+  background-color: lightgray;
+  grid-template-columns: repeat(7, minmax(20px, 10vw));
+  grid-template-rows: repeat(6, minmax(20px, 10vh));
+  grid-auto-flow: column;
+  border: 10px solid gray;
+}
+
+.main-grid-container li {
+  border-radius: 20%;
+  border: 1px solid gray;
+  background-color: #fff;
+}
