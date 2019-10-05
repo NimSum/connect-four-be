@@ -21,3 +21,4 @@ mongoose.connect(
   }
 ).catch((error: any) => console.log(error));
 
+app.use(express.static('public'));
