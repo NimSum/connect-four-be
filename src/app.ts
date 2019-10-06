@@ -9,18 +9,30 @@ const server = app.listen(3000, (err: any) => {
 
   console.log('Listening to requests on port 3000')
 });
+
+app.use(express.static('public'));
 const io = socket(server);
+
+mongoose.connect(
+  mongoURI,
+  { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+).catch((error: any) => console.log(error));
 
 io.on('connection', (client: any) => {
   client.on('register', handleRegister);
 
   client.on('join', handleJoin);
 
+  client.on('gridUpdate', handleGridUpdate);
+
   client.on('leave', handleLeave);
 
-  client.on('gameRooms', handleGetGameRooms);
+  client.on('gameRooms', getGameRooms);
   
-  client.on('availablePlayers', handleGetAvailablePlayers)
+  client.on('availablePlayers', getAvailablePlayers);
 
   client.on('disconnect', () => {
     console.log(`Client disconnect... ${client.id}`)
