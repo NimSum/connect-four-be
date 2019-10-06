@@ -31,12 +31,38 @@ io.on('connection', (client: any) => {
   });
 });
 
-mongoose.connect(
-  mongoURI,
-  { 
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-).catch((error: any) => console.log(error));
+io.on('error', (err: string) => {
+  console.log(`Recieved socket error: /n ${err}`)
+});
 
-app.use(express.static('public'));
+function handleRegister() {
+
+};
+
+function unregisterHandler() {
+
+};
+
+function register(name, cb) {
+
+};
+
+function handleJoin(gameRoomName, cb) {
+
+};
+
+function handleLeave(gameRoomName, cb) {
+
+};
+
+function handleGridUpdate(gameRoomName, grid, cb) {
+
+};
+
+function getGameRooms(cb) {
+
+};
+
+function getAvailablePlayers(cb) {
+
+};
