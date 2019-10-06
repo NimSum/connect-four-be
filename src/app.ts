@@ -4,13 +4,31 @@ const socket = require('socket.io');
 const express = require('express');
 
 const app = express();
-const server = app.listen(3000, () => {
+const server = app.listen(3000, (err: any) => {
+  if (err) throw err;
+
   console.log('Listening to requests on port 3000')
 });
 const io = socket(server);
 
-io.on('connection', (socket: object) => {
-  console.log(socket)
+io.on('connection', (client: any) => {
+  client.on('register', handleRegister);
+
+  client.on('join', handleJoin);
+
+  client.on('leave', handleLeave);
+
+  client.on('gameRooms', handleGetGameRooms);
+  
+  client.on('availablePlayers', handleGetAvailablePlayers)
+
+  client.on('disconnect', () => {
+    console.log(`Client disconnect... ${client.id}`)
+  });
+
+  client.on('error', () => {
+    console.log(`Client error... ${client.id}`)
+  });
 });
 
 mongoose.connect(
