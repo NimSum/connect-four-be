@@ -1,18 +1,20 @@
-module.exports = function() {
+  export{};
+  
   const express = require('express');
   const router = express.Router();
-  const utils = require('../utils')();
+  const utils = require('../utils');
+  const db = require('../../db')
   
-  router.post('/signup', (req, res) => {
-    const verifiedParams = utils.checkSignupParams(req.body);
+  router.post('/signup', (req: any, res:any) => {
+    const verifiedParams: object | boolean = utils.checkSignupParams(req.body);
     if (verifiedParams === true) {
-      // create account
-      res.status(201).json('Account Created');
+      db.createNewPlayer(req.body)
+        .then((result: object) => res.status(201).json(result))
+        .catch((error: object) => res.status(500).json(error));
     } else {
       res.status(400).json(verifiedParams);
-    };
+    }; 
   }); 
 
-  return router;
-};
+  module.exports = router;
 
