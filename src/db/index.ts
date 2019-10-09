@@ -1,5 +1,8 @@
+export {};
+
 const mongoose = require('mongoose');
 const { mongoURI } = require('../../config/keys');
+const { Player } = require('./models');
 
 mongoose.connect(
   mongoURI,
@@ -11,3 +14,7 @@ mongoose.connect(
     throw new Error(error)
   }
 );
+
+module.exports = {
+  
+}
