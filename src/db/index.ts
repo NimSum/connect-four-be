@@ -15,6 +15,25 @@ mongoose.connect(
   }
 );
 
-module.exports = {
+async function createNewPlayer(player) {
+  const { player_name, email, password, secret_one, secret_two } = player;
   
+  const newPlayer = new Player({
+    _id: new mongoose.Types.ObjectId(),
+    player_name,
+    email,
+    password,
+    secret_one,
+    secret_two
+  });
+
+  try {
+    return await newPlayer.save();
+  } catch(error) {
+    throw new Error(error);
+  }
+};
+
+module.exports = {
+  createNewPlayer
 }
