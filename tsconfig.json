@@ -3,11 +3,12 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
+    "types": ["node"],
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "watch": true
   },
   "compileOnSave": true,
-  "lib": ["es2015"]
+  "lib": ["es6"]
 }

@@ -14,7 +14,7 @@
     } else {
       res.status(400).json(verifiedParams);
     }; 
-  }); 
+  });
 
   module.exports = router;
 
