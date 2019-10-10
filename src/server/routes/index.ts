@@ -16,5 +16,9 @@
     }; 
   });
 
+  router.post('/login', (req:any, res:any) => {
+    
+  });
+
   module.exports = router;
 

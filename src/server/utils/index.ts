@@ -1,14 +1,9 @@
+const requiredParams = require('./requiredParams');
+
 function checkSignupParams(params: Object): Boolean | object {
-  const requiredParams: Array<string> = [
-    'player_name',
-    'email',
-    'password',
-    'secret_one',
-    'secret_two'
-  ];
   const missingParams: Array<string> = [];
   
-  for (let param of requiredParams) {
+  for (let param of requiredParams.signUp) {
     if (!params[param]) missingParams.push(param);
   };
 
