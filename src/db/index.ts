@@ -9,7 +9,8 @@ mongoose.connect(
   mongoURI,
   { 
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   }
 ).catch((error: any) => {
     throw new Error(error)
@@ -28,22 +29,13 @@ async function createNewPlayer(player) {
     secret_two
   });
 
-  try {
-    console.log(newPlayer);
-    // return await newPlayer.save();
-  } catch(error) {
-    throw new Error(error);
-  }
+  return await newPlayer.save();
 };
 
 async function getPlayer(player) {
   const { email, password } = player;
 
-  try {
-    return await Player.findOne({ 'email': email });
-  } catch(error) {
-    throw new Error(error);
-  }
+  return await Player.findOne({ 'email': email });
 };
 
 module.exports = {
