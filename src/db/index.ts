@@ -17,7 +17,7 @@ mongoose.connect(
   }
 );
 
-async function createNewPlayer(player) {
+async function createNewPlayer(player: Player) {
   const { player_name, email, password, secret_one, secret_two } = player;
   
   const newPlayer = new Player({
@@ -32,13 +32,20 @@ async function createNewPlayer(player) {
   return await newPlayer.save();
 };
 
-async function getPlayer(player) {
-  const { email, password } = player;
-
-  return await Player.findOne({ 'email': email });
+async function getPlayer(isEmail: boolean, player: string) {
+  const type: string = isEmail ? 'email' : 'player_name';
+  return await Player.findOne({ [type]: player });
 };
 
 module.exports = {
   createNewPlayer,
   getPlayer
+}
+
+interface Player {
+  player_name: string,
+  email: string, 
+  password: string, 
+  secret_one: string, 
+  secret_two: string
 }
