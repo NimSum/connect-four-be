@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 
 const playerSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  player_name: { type: String, required: true },
-  email: { type: String, required: true },
+  player_name: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   secret_one: { type: String, required: true },
   secret_two: { type: String, required: true },
