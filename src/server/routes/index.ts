@@ -2,11 +2,11 @@
   
   const express = require('express');
   const router = express.Router();
-  const utils = require('../utils');
+  const params = require('../utils/paramsVerification');
   const db = require('../../db')
   
   router.post('/signup', (req: any, res:any) => {
-    const verifiedParams: object | boolean = utils.checkSignupParams(req.body);
+    const verifiedParams: object | boolean = params.checkSignupParams(req.body);
     if (verifiedParams === true) {
       db.createNewPlayer(req.body)
         .then((result: object) => res.status(201).json(result))
@@ -17,7 +17,7 @@
   });
 
   router.post('/login', (req:any, res:any) => {
-    
+
   });
 
   module.exports = router;
