@@ -11,6 +11,13 @@ async function generateToken(data: object): Promise<string> {
   return await jwt.sign(data, secretKey, config);
 }
 
+async function verifyToken(token: string): Promise<object | boolean> {
+  if (!token) return false;
+  const splitBearer = token.split(' ');
+  return await jwt.verify(splitBearer[1], secretKey);
+};
+
 module.exports = {
-  generateToken
+  generateToken,
+  verifyToken
 };

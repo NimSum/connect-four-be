@@ -2,12 +2,13 @@ export{};
 
 const db = require('../../db');
 const { compareEncryptedText } = require('../../utils/passwordEncryptions')
+const { verifyToken } = require('../../utils/jwtAuthentication');
 
 async function loginAuthentication(req: any, res: any, next: any) {
   try {
-    const playerFound = await db.getPlayer(true, req.body.email);
-    const { password } = playerFound;
-    const match: Promise<boolean> = await compareEncryptedText(req.body.password, password);
+    const { email } = await verifyToken(req.headers.authorization);
+    const playerFound = await db.getPlayer(true, req.body.email || email);
+    const match: Promise<boolean> = await compareEncryptedText(req.body.password, playerFound.password);
 
     if (playerFound === null || !match) {
       res.status(404).json({ 

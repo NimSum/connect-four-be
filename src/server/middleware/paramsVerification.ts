@@ -2,12 +2,14 @@ const requiredParams = require('../../utils/requiredParams');
 
 function checkParams(req: any, res: any, next: any, required: Array<string>) {
   const missingParams: Array<string> = [];
+  
+  const ifTokenLogin = req.path === '/login' && !!req.headers.authorization;
 
   for (let param of required) {
     if (!req.body[param]) missingParams.push(param);
   };
 
-  if (missingParams.length > 0) {
+  if (missingParams.length > 0 && !ifTokenLogin) {
     const errorMessage = {
       params_required: required.join(', '),
       error: `Missing: ${missingParams.join(', ')}`
