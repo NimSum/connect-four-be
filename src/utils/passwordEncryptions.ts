@@ -12,7 +12,15 @@ async function encryptText(text: string): Promise<string | object> {
   }
 };
 
+async function compareEncryptedText(textOne: string, textTwo: string): Promise<boolean | object> {
+  try {
+    return await bcrypt.compare(textOne, textTwo);
+  } catch(err) {
+    return err;
+  }
+};
 
 module.exports = {
-  encryptText
+  encryptText,
+  compareEncryptedText
 };

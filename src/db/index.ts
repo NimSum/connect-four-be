@@ -3,7 +3,7 @@ export {};
 const mongoose = require('mongoose');
 const { mongoURI } = require('../../config/keys');
 const { Player } = require('./models');
-const { encryptText } = require('../utils/passEncryptions');
+const { encryptText } = require('../utils/passwordEncryptions');
 
 mongoose.connect(
   mongoURI,
