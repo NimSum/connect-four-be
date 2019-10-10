@@ -5,9 +5,14 @@ module.exports = <RequiredParams> {
     'password',
     'secret_one',
     'secret_two'
+  ],
+  login: [
+    'email',
+    'password'
   ]
 };
 
 interface RequiredParams {
-  signUp: Array<string>
+  signUp: Array<string>,
+  login: Array<string>
 };

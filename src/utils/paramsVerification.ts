@@ -1,12 +1,6 @@
 const requiredParams = require('./requiredParams');
 
-function checkSignupParams(params: Object): Boolean | string | Boolean {
-  const missingParams = checkParams(params, requiredParams.signUp);
-
-  return missingParams;
-};
-
-function checkParams(params: Object, required: Array<string>): string | Boolean {
+function checkParams(params: Object, required: Array<string>): Boolean | object {
   const missingParams: Array<string> = [];
 
   for (let param of required) {
@@ -14,10 +8,14 @@ function checkParams(params: Object, required: Array<string>): string | Boolean 
   };
 
   return missingParams.length > 0
-    ? missingParams.join(', ')
+    ? {
+      params_required: required.join(', '),
+      error: `Missing: ${missingParams.join(', ')}`
+    }
     : true;
 };
 
 module.exports = {
-  checkSignupParams
+  checkSignupParams: (params: Object):Boolean | Object => checkParams(params, requiredParams.signUp),
+  checkLoginParams: (params: Object):Boolean | Object => checkParams(params, requiredParams.login)
 };
