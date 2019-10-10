@@ -2,18 +2,27 @@
   
   const express = require('express');
   const router = express.Router();
-  const utils = require('../utils');
-  const db = require('../../db')
+  const params = require('../middleware/paramsVerification');
+  const loginAuthentication = require('../middleware/loginAuthentication');
+  const jwt = require('../../utils/jwtAuthentication');
+  const db = require('../../db');
   
-  router.post('/signup', (req: any, res:any) => {
-    const verifiedParams: object | boolean = utils.checkSignupParams(req.body);
-    if (verifiedParams === true) {
-      db.createNewPlayer(req.body)
-        .then((result: object) => res.status(201).json(result))
-        .catch((error: object) => res.status(500).json(error));
-    } else {
-      res.status(400).json(verifiedParams);
-    }; 
+  router.post('/signup', params.checkSignupParams, async (req: any, res:any) => {
+    try {
+      const newPlayer = await db.createNewPlayer(req.body);
+      const { player_name, email } = newPlayer;
+      const token = await jwt.generateToken({ player_name, email });
+      res.status(201).json({ token, player: newPlayer });
+    } catch(error) {
+      res.status(500).json(error)
+    }
+  });
+
+  router.post('/login', params.checkLoginParams, loginAuthentication, async (req:any, res:any) => {
+    const { player_name, email } = req.playerFound;
+    const token = await jwt.generateToken({ player_name, email });
+
+    res.status(200).json({token, player: req.playerFound});
   });
 
   module.exports = router;
