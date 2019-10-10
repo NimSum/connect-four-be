@@ -2,8 +2,8 @@
   
   const express = require('express');
   const router = express.Router();
-  const params = require('../utils/paramsVerification');
-  const db = require('../../db')
+  const params = require('../../utils/paramsVerification');
+  const db = require('../../db');
   
   router.post('/signup', (req: any, res:any) => {
     const verifiedParams: object | boolean = params.checkSignupParams(req.body);

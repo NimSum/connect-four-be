@@ -3,6 +3,7 @@ export {};
 const mongoose = require('mongoose');
 const { mongoURI } = require('../../config/keys');
 const { Player } = require('./models');
+const { encryptText } = require('../utils/passEncryptions');
 
 mongoose.connect(
   mongoURI,
@@ -22,13 +23,14 @@ async function createNewPlayer(player) {
     _id: new mongoose.Types.ObjectId(),
     player_name,
     email,
-    password,
+    password: await encryptText(password),
     secret_one,
     secret_two
   });
 
   try {
-    return await newPlayer.save();
+    console.log(newPlayer);
+    // return await newPlayer.save();
   } catch(error) {
     throw new Error(error);
   }
