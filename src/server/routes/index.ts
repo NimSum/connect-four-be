@@ -5,19 +5,16 @@
   const params = require('../../utils/paramsVerification');
   const db = require('../../db');
   
-  router.post('/signup', (req: any, res:any) => {
-    const verifiedParams: object | boolean = params.checkSignupParams(req.body);
-    if (verifiedParams === true) {
+  router.post('/signup', params.checkSignupParams, (req: any, res:any) => {
       db.createNewPlayer(req.body)
         .then((result: object) => res.status(201).json(result))
         .catch((error: object) => res.status(500).json(error));
-    } else {
-      res.status(400).json(verifiedParams);
-    }; 
   });
 
-  router.post('/login', (req:any, res:any) => {
-
+  router.post('/login', params.checkLoginParams, (req:any, res:any) => {
+      db.getPlayer(req.body)
+        .then((result: object) => res.status(200).json(result))
+        .catch((error: object) => res.status(500).json(error));
   });
 
   module.exports = router;

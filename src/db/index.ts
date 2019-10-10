@@ -36,6 +36,17 @@ async function createNewPlayer(player) {
   }
 };
 
+async function getPlayer(player) {
+  const { email, password } = player;
+
+  try {
+    return await Player.findOne({ 'email': email });
+  } catch(error) {
+    throw new Error(error);
+  }
+};
+
 module.exports = {
-  createNewPlayer
+  createNewPlayer,
+  getPlayer
 }

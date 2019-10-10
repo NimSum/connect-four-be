@@ -12,6 +12,7 @@ async function encryptText(text: string): Promise<string | object> {
   }
 };
 
+
 module.exports = {
   encryptText
 };
