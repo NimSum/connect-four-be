@@ -5,18 +5,29 @@ const { compareEncryptedText } = require('../../utils/passwordEncryptions')
 const { verifyToken } = require('../../utils/jwtAuthentication');
 
 async function loginAuthentication(req: any, res: any, next: any) {
-  try {
-    const { email } = await verifyToken(req.headers.authorization);
-    const playerFound = await db.getPlayer(true, req.body.email || email);
-    const match: Promise<boolean> = await compareEncryptedText(req.body.password, playerFound.password);
+  let email: string;
 
-    if (playerFound === null || !match) {
-      res.status(404).json({ 
-        error: 'Invalid login credentials' 
-      });
+  try {
+    if (!!req.headers.authorization) {
+      const verified =  await verifyToken(req.headers.authorization);
+      email = verified.email;
     } else {
-      req.playerFound = playerFound;
-      next();
+      email = req.body.email;
+    }
+
+    const playerFound = await db.getPlayer(true, email);
+
+    if (!playerFound) {
+      res.status(404).json({ error: 'Invalid login credentials' });
+    } else {
+      const passwordMatch: boolean = await compareEncryptedText(req.body.password || '', playerFound.password || '');
+      if (passwordMatch || !!req.headers.authorization) {
+        req.playerFound = playerFound
+        next();
+      }
+      else {
+        res.status(404).json({ error: 'Invalid login credentials' })
+      };
     };
   } catch(error) { 
     res.status(500).json(error);
