@@ -1,12 +1,10 @@
-Front End Repo: https://github.com/NimSum/connect-four-fe
+### Front End Repo: https://github.com/NimSum/connect-four-fe
 
-# Palette Pal API [![Build Status](https://travis-ci.org/NimSum/palette-pal-backend.svg?branch=master)](https://travis-ci.org/NimSum/palette-pal-backend)
+# Connect-Four API & Websocket - Development In Progress...
 
-#### By [Lynne Rang](https://github.com/lynnerang) & [Nim Garcia](https://github.com/nimsum)
+### An api created to store player stats, active games, chat history, etc for the connect four game!
 
-### An api created to store and provide color palettes for users.
-
-#### [A Front-End app using this API](https://github.com/NimSum/palette-pal-frontend)
+#### [A Front-End app using this API](https://github.com/NimSum/connect-four-fe)
 
 ## Table of contents
 * [Getting Started](#Getting-Started)
