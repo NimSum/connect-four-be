@@ -32,6 +32,11 @@ module.exports = {
    error: 'Invalid login credentials'
   },
   validToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJfbmFtZSI6Im5pbWRpbXN1bSIsImVtYWlsIjoibmltQHN1bS5jb20iLCJpYXQiOjE1NzA4MjY1Nzh9.O5oOD0OUjtZPSFjzp3fF1Z0Z9wVpjno9rAWrCq5RcGk',
+  invalidToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJfbmFtZSI6Im5pbWRpbXN1bSIsImVtYWlsIjoibmltQHN1bS5jb20iLCJpYXQiOjE1NzA4MjY1Nzh9.O5oOD0OUjtZPSFjzp3fF1Z0Z9wVpjno9rAWrCq5RcGs',
+  invalidTokenError:  {
+    "message": "invalid signature",
+    "name": "JsonWebTokenError"
+  },
   createdPlayer: {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJfbmFtZSI6Im5pbWRpbXN1bSIsImVtYWlsIjoibmltQHN1bS5jb20iLCJpYXQiOjE1NzA4MjY1Nzh9.O5oOD0OUjtZPSFjzp3fF1Z0Z9wVpjno9rAWrCq5RcGk",
     "player": {

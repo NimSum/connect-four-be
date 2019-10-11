@@ -98,12 +98,19 @@ describe('App', () => {
       });
     });
 
-    it('rejects invalid password', () => {
- 
-    });
-    
     it('rejects invalid token', () => {
-
+      request(app)
+        .post('/api/v1/login')
+        .set({
+          Accept: 'application/json', 
+          authorization: mockData.invalidToken
+        })
+        .expect('Content-Type', /json/)
+        .expect(500)
+        .end(function(err, res) {
+          if (err) return console.log(err);
+          assert.deepEqual(res.body, mockData.invalidTokenError);
+        });
     });
 
     it('rejects incomplete parameters', () => {
