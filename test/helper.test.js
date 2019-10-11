@@ -15,10 +15,6 @@ mongoose.connection
         console.warn('Error : ',error);
     });
 
-beforeEach((done) => {
-    mongoose.connection.collections.players.drop(() => done()); 
-});
-
-after((done) => {
-  mongoose.connection.collections.players.drop(() => done());
+after(() => {
+  mongoose.connection.collections.players.drop(); 
 });
