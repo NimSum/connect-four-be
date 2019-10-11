@@ -4,7 +4,8 @@
   "description": "Connect four backend using web sockets",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha test/** --watch"
+    "test": "NODE_ENV=test mocha test/** --watch",
+    "start": "nodemon dist/src/app"
   },
   "author": "",
   "license": "ISC",
