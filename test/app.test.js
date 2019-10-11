@@ -1,4 +1,5 @@
 const app = require('../dist/src/app');
+const { createNewPlayer, getPlayer } = require('../dist/src/db');
 const request = require('supertest');
 const mockData = require('./mockData');
 const { assert, expect } = require('chai');
@@ -9,7 +10,7 @@ describe('App', () => {
   });
 
   describe('POST /signup', () => {
-    it('responds with newly created player', async () => {
+    it('responds with newly created player', () => {
       request(app)
         .post('/api/v1/signup')
         .send(mockData.newPlayer)
@@ -22,7 +23,7 @@ describe('App', () => {
         });
     });
     
-    it('responds with missing params', async () => {
+    it('responds with missing params', () => {
       request(app)
         .post('/api/v1/signup')
         .send(mockData.incompleteSignup)
@@ -35,9 +36,33 @@ describe('App', () => {
         });
     });
 
-    it('has proper error handling', async () => {
-      
+    it('has does not allow duplicate players', async () => {
+      // cant make it work :/
     });
+
   });
 
+  describe('POST /login', () => {
+    
+    it('rejects invalid email', () => {
+      
+    });
+
+    it('rejects invalid password', () => {
+     
+    });
+
+    it('rejects invalid password', () => {
+ 
+    });
+    
+    it('rejects invalid token', () => {
+
+    });
+
+    it('rejects incomplete parameters', () => {
+
+    });
+
+  });
 });
