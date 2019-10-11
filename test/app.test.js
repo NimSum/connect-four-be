@@ -58,11 +58,31 @@ describe('App', () => {
     });
 
     it('responds to valid token', () => {
-
+      request(app)
+        .post('/api/v1/login')
+        .set({
+          Accept: 'application/json', 
+          authorization: mockData.validToken 
+        })
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) return console.log(err);
+          assert.deepEqual(Object.keys(res.body), Object.keys(mockData.createdPlayer));
+        });
     });
 
     it('rejects invalid email', () => {
-   
+      request(app)
+        .post('/api/v1/login')
+        .send(mockData.invalidEmail)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .end(function(err, res) {
+          if (err) return console.log(err);
+          assert.deepEqual(res.body, mockData.invalidLoginError);
+        });
     });
 
     it('rejects invalid password', () => {
