@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const { newPlayer } = require('../mockData');
 const mongoose = require('mongoose');
 
-describe('Player Authentication', () => {
+describe('mongodb', () => {
   const player = new Player(newPlayer);
   player._id = new mongoose.Types.ObjectId();
 

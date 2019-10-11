@@ -16,8 +16,15 @@ const playerSchema = new Schema({
   games_played: { type: Number, default: 0 },
   friends: [Number],
   achievements: [Number],
+  game_history: [
+    {
+      vs_player: String,
+      is_winnder: Boolean,
+      created_at: Date
+    }
+  ]
 }, { timestamps: { createdAt: 'created_at' } });
 
 module.exports = {
-  Player: mongoose.model('Player', playerSchema)
+  Player: mongoose.models.player || mongoose.model('player', playerSchema)
 };
