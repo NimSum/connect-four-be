@@ -28,6 +28,10 @@ module.exports = {
   invalidLoginParams: {
     "email": "nim@sum.com"
   },
+  invalidLoginParamsErr: { 
+    params_required: 'email, password',
+    error: 'Missing: password' 
+  },
   invalidLoginError: {
    error: 'Invalid login credentials'
   },

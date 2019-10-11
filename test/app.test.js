@@ -114,7 +114,16 @@ describe('App', () => {
     });
 
     it('rejects incomplete parameters', () => {
-
+      request(app)
+      .post('/api/v1/login')
+      .send(mockData.invalidLoginParams)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(400)
+      .end(function(err, res) {
+        if (err) return console.log(err);
+        assert.deepEqual(res.body, mockData.invalidLoginParamsErr);
+      });
     });
 
   });
