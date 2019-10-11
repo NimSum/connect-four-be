@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-// afterEach(() => {
+// after(() => {
 //   mongoose.connection.collections.players.drop(); 
 // });
-
