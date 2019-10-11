@@ -23,7 +23,7 @@ module.exports = {
   },
   invalidPassword: {
     "email": "nim@sum.com",
-    "password": "nimdimsum"
+    "password": "nimsum"
   },
   invalidLoginParams: {
     "email": "nim@sum.com"

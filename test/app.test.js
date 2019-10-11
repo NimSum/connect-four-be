@@ -86,7 +86,16 @@ describe('App', () => {
     });
 
     it('rejects invalid password', () => {
-     
+      request(app)
+      .post('/api/v1/login')
+      .send(mockData.invalidPassword)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(404)
+      .end(function(err, res) {
+        if (err) return console.log(err);
+        assert.deepEqual(res.body, mockData.invalidLoginError);
+      });
     });
 
     it('rejects invalid password', () => {
