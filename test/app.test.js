@@ -23,7 +23,16 @@ describe('App', () => {
     });
     
     it('responds with missing params', async () => {
-
+      request(app)
+        .post('/api/v1/signup')
+        .send(mockData.incompleteSignup)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(400)
+        .end(function(err, res) {
+          if (err) return console.log(err);
+          assert.deepEqual(Object.entries(res.body), Object.entries(mockData.incompleteSignupRes));
+        });
     });
 
     it('has proper error handling', async () => {
