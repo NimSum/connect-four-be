@@ -1,22 +1,22 @@
-const { Player } = require('../../dist/src/db/models');
 const { expect } = require('chai');
 const { newPlayer } = require('../mockData');
+const {  createNewPlayer, getPlayer } = require('../../dist/src/db');
 const mongoose = require('mongoose');
 
-describe('mongodb', () => {
-  const player = new Player(newPlayer);
-  player._id = new mongoose.Types.ObjectId();
+describe('mongodb',() => {
+  let player;
 
-  it('responds with new player', async () => {
-    const result = await player.save()
-
-    expect(result.player_name).to.equal(player.player_name); 
+  beforeEach(async() => {
+    player = await createNewPlayer(newPlayer);  
   });
   
-  it('creates player in players db', async () => {
-    const result = await Player.findOne({ 'email': newPlayer.email });
 
-    expect(result.player_name).to.equal(player.player_name);
+  it('responds with new player', () => {
+    expect(player.player_name).to.equal(newPlayer.player_name); 
   });
-
+  
+  it('creates player in players db', async() => {
+    const response = await getPlayer(true, newPlayer.email);
+    expect(response.player_name).to.equal(newPlayer.player_name);
+  });
 });
