@@ -18,6 +18,8 @@ function eventsManager(client: any) {
     handleDisconnect
   } = createHandlers(client, clientManager, gameRoomManager)
   
+  client.emit('timer', client.id);
+
   client.on('register', handleRegister);
 
   client.on('join', handleJoin);
@@ -29,12 +31,16 @@ function eventsManager(client: any) {
   client.on('gameRooms', getGameRooms);
   
   client.on('availablePlayers', getAvailablePlayers);
+  
+  console.log(`Client connected... ${client.id}`);
 
   client.on('disconnect', () => {
+    // perform disconnect tasks here
     console.log(`Client disconnect... ${client.id}`)
   });
 
   client.on('error', () => {
+    // perform error tasks here
     console.log(`Client error... ${client.id}`)
   });
 };

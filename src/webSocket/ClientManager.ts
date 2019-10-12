@@ -1,24 +1,7 @@
+const { getPlayer } = require('../db/index');
+
 module.exports = function() {
   const clients = new Map();
-
-  const mockPlayers = [
-    {
-      gamer_tag: 'nimsum',
-      id: '1',
-      statusTag: 'coding',
-      wins: 1000,
-      losses: 100,
-      total_games: 1100
-    },
-    {
-      gamer_tag: 'dimsum',
-      id: '2',
-      statusTag: 'winning',
-      wins: 100,
-      losses: 50,
-      total_games: 150
-    }
-  ];
 
   function addClient(client: any) {
     clients.set(client.id, { client });
@@ -44,8 +27,12 @@ module.exports = function() {
       .filter(player => !playersTaken.has(player.id))
   };
 
-  function getPlayerById(playerId) {
-    return mockPlayers.find(player => player.id === playerId);
+  async function getPlayerByName(player_name) {
+    try {
+      return await getPlayer(false, player_name);
+    } catch(err) {
+      return err;
+    }
   };
 
   function getPlayerByClientId(clientId) {
@@ -57,8 +44,7 @@ module.exports = function() {
     registerClient,
     removeClient,
     getPlayerByClientId,
-    getPlayerById,
+    getPlayerByName,
     getAvailablePlayers
   };
-  
 };

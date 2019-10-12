@@ -4,8 +4,8 @@ module.exports = function (client, clientManager, gameRoomManager) {
     console.log(`Recieved socket error: /n ${err}`)
   });
   
-  function handleRegister({ playerId }) {
-    const player = clientManager.getPlayerById(playerId);
+  async function handleRegister(player_name) {
+    const player = await clientManager.getPlayerByName(player_name);
     clientManager.registerClient(client, player);
   };
   
