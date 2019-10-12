@@ -109,24 +109,24 @@
 // }
 
 
-// const socket = io.connect('http://localhost:3000');
-// document.querySelector('#submit-register')
-//   .addEventListener('click', () => {
-//     const playerId = document.querySelector('#user-id').value
+const socket = io.connect('http://localhost:3000');
+document.querySelector('#submit-register')
+  .addEventListener('click', () => {
+    const playerId = document.querySelector('#user-id').value
     
-//     socket.emit('register', { playerId });
-//     socket.on('register', (data) => console.log(data));
-//   });
+    socket.emit('register', { playerId });
+    socket.on('register', (data) => console.log(data));
+  });
 
-// document.querySelector('#submit-join')
-//   .addEventListener('click', () => {
-//     const playerId = document.querySelector('#user-id').value
-//     const gameRoomId = document.querySelector('#room-id').value;
-//     socket.emit('join', { gameRoomId, playerId });
+document.querySelector('#submit-join')
+  .addEventListener('click', () => {
+    const playerId = document.querySelector('#user-id').value
+    const gameRoomId = document.querySelector('#room-id').value;
+    socket.emit('join', { gameRoomId, playerId });
   
-//     socket.on('join', (data) => console.log(data));
-// });
+    socket.on('join', (data) => console.log(data));
+});
 
-// socket.on('register', (data) => {
-//   console.log(data)
-// })
+socket.on('register', (data) => {
+  console.log(data)
+})

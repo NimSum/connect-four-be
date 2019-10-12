@@ -1,4 +1,4 @@
-const socket = require('socket.io')(server);
+export {};
 
 const createHandlers = require('./handlers');
 const ClientManager = require('./ClientManager');
@@ -7,7 +7,7 @@ const GameRoomManager = require('./GameRoomManager');
 const clientManager = ClientManager();
 const gameRoomManager = GameRoomManager();
 
-socket.on('connection', (client: any) => {
+function eventsManager(client: any) {
   const {
     handleRegister,
     handleJoin,
@@ -37,4 +37,6 @@ socket.on('connection', (client: any) => {
   client.on('error', () => {
     console.log(`Client error... ${client.id}`)
   });
-});
+};
+
+module.exports = eventsManager;

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = require('./server/routes');
 const bodyParser = require('body-parser');
+const socket = require('socket.io');
+const eventManager = require('./webSocket/eventManager');
 
 const app = express();
 
@@ -15,5 +17,10 @@ const server = app.listen(port, (err: any) => {
   console.log(`Listening to requests on port ${port}...`)
 });
 
+const io = socket(server);
+
+io.on('connection', (client: any) => {
+  eventManager(client);
+});
 
 module.exports = server;
