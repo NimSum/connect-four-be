@@ -40,3 +40,31 @@ class Grid {
   ];
 
   checkWinner(player: number): Boolean {
+    const gridMap = () => [
+      ...this.gridY,
+      ...this.gridX(),
+      ...this.botLeftTopRight(),
+      ...this.topLeftBotRight()
+    ];
+
+    for (let row of gridMap()) {
+      let inOrderCounter: number = 0;
+      let prevSlot: number = 0;
+
+      for (let slot of row) {
+        prevSlot === player && slot === prevSlot
+          ? inOrderCounter++
+          : inOrderCounter = 0;
+        prevSlot = slot;
+        
+        if (inOrderCounter >= 3) {
+          return true;
+        };
+      }
+      inOrderCounter = 0;
+      prevSlot = 0;
+    };
+
+    return false;
+  };
+
