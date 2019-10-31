@@ -3,8 +3,49 @@ module.exports = function({ name, id }) {
 
   let currentGrid: Array<number> = [];
 
-  function broadcastGrid(grid: Array<number>) {
-    players.forEach(player => player.emit('gridUpdate', {grid, players}));
+  /// ACTIVE GAME
+  insertChip(xCoorDinate: number, clientId: string) {
+    const player = this.players[this.currentPlayer];
+    
+    if (player) {
+      if (player.clientId === clientId) {
+        const coordinate: [number, number, number] = this.currentGrid
+          .insertChip(xCoorDinate, (this.currentPlayer + 1));
+        this.prevSlot = coordinate;
+
+        if (this.currentGrid.checkWinner(this.currentPlayer + 1)) {
+          this.activeGameUpdate(true);
+          const loser = player.player_name === this.players[0].player_name
+            ? this.players[1]
+            : this.players[0];
+          this.gameOver(player, loser);
+        } else {
+          this.switchPlayer();
+        }
+      }
+    }
+  };
+
+    const player = this.players[this.currentPlayer];
+    
+    if (player) {
+      if (player.clientId === clientId) {
+        const coordinate: [number, number, number] = this.currentGrid
+          .insertChip(xCoorDinate, (this.currentPlayer + 1));
+        this.prevSlot = coordinate;
+
+        if (this.currentGrid.checkWinner(this.currentPlayer + 1)) {
+          this.activeGameUpdate(true);
+          const loser = player.player_name === this.players[0].player_name
+            ? this.players[1]
+            : this.players[0];
+          this.gameOver(player, loser);
+        } else {
+          this.switchPlayer();
+        }
+      }
+    }
+  };
   };
 
   function updateCurrentGrid(grid: Array<number>) {

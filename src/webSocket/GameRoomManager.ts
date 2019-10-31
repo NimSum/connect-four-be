@@ -119,10 +119,14 @@ module.exports = function(client: any, io: any) {
     const player = clients.get(client.id) || false;
     return player;
       losses = null, 
-  //// ACTIVE GAME ROOM
-  function handleSetPlayerReady(data: { isReady: boolean, chipColor: string}) {
-    const player = getPlayerByClientId();
+
+  function handleChipPlacement(xCoordinate: number) {
+    const player: Player = getPlayerByClientId();
     const room = getGameRoomById(player.inRoom);
+
+    if (room && player) room.insertChip(xCoordinate, client.id);
+  }
+
     
     if (room && player) {
       room.setPlayerReady(data, client.id);
