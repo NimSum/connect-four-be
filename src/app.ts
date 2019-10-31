@@ -3,11 +3,12 @@ const router = require('./server/routes');
 const bodyParser = require('body-parser');
 const socket = require('socket.io');
 const eventManager = require('./webSocket/eventManager');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
 app.use('/api/v1', router);
 
 app.use((req: any, res: any, next: any) => {
@@ -30,7 +31,7 @@ const server = app.listen(port, (err: any) => {
 const io = socket(server);
 
 io.on('connection', (client: any) => {
-  eventManager(client);
+  eventManager(client, io);
 });
 
-module.exports = server;
+module.exports = app;
