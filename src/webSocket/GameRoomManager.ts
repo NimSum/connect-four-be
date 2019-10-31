@@ -109,7 +109,39 @@ module.exports = function(client: any, io: any) {
     const updateMessage = { roomId, updateType: 'deleteRoom'};
     broadcastGameRoomUpdates(updateMessage);
   };
-      broadcastGameRoomUpdates(updateMessage);
+
+  //// UTILITY
+  function getGameRoomById(roomId: string): any {
+
+  function serializePlayer(player: any): Player {
+    const { 
+  function getPlayerByClientId(): Player {
+    const player = clients.get(client.id) || false;
+    return player;
+      losses = null, 
+      player_name,
+      player_type = 'registered',
+      _id
+    } = player;
+    
+    return {
+      win_streak,
+      wins,
+      losses,
+      player_name,
+      _id,
+      player_type
+    }
+  };
+
+  function serializeRoom(room: any): SerializedRoom {
+    const { roomId, players, roomDetails, status, hasPassword } = room;
+    return {
+      roomId,
+      players,
+      name: roomDetails.name,
+      hasPassword,
+      status
     }
   };
     gameRooms.forEach(player => player.removeClient(client));
