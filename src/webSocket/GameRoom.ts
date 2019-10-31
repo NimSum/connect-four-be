@@ -237,12 +237,24 @@ class GameRoom {
     this.broadcastMessage({ message: `${newPlayer.player_name} has joined.`, type: 'notification' });
   };
 
-  function addPlayer(client: any, player) {
-    if (players.size < 2) players.set(client.id, {client, player} );
+  removePlayer(clientId: string) {
+    const playerSlot: number = this.findPlayerByClientId(clientId)
+    const loser: Player = {...this.players[playerSlot]};
 
-    client.emit('join', { message: 'HIIIIIII'})
+    this.players[playerSlot] = null;
 
-    console.log(players);
+    if (this.status === 'active') {
+      const message = { message: `${loser.player_name} has left/forfeited the match.`, type: 'notification' };
+      const winner = this.players[0] || this.players[1];
+      this.gameOver(winner, loser);
+      this.broadcastMessage(message);
+    } else if (!this.players[0] && !this.players[1]) {
+      this.removeThisGameRoom();
+    } else {
+      this.status = 'waiting';
+      this.activeGameUpdate(false);
+    }
+  };
 
   };
 
