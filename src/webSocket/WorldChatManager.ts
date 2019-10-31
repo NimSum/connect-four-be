@@ -17,6 +17,28 @@ module.exports = function(client: any, io: any) {
     io.to('world chat').emit('world chat update', update);
   };
   
+  function joinWorldChat(player: Player) {
+    const { player_name = false } = player;
+
+    if (player_name && !checkIfAlreadyMem(player_name)) {
+      players.set(client.id, player);
+
+      client.join('world chat');
+  
+      const update: PlayerUpdate = { type: 'player', player };
+      broadcastToWorld(update);
+  
+      const { player_name } = player;
+      const message: ChatHistoryItem = {
+        player_name,
+        message: `${player_name} has joined the chat!`,
+        type: 'notification'
+      }
+  
+      broadcastToWorld(message);
+    }
+  };
+
 
   return {
     broadcastToWorld,
