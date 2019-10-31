@@ -144,45 +144,34 @@ module.exports = function(client: any, io: any) {
 
     
     return {
-      win_streak,
-      wins,
-      losses,
-      player_name,
-      _id,
-      player_type
-    }
-  };
-
-  function serializeRoom(room: any): SerializedRoom {
-    const { roomId, players, roomDetails, status, hasPassword } = room;
-    return {
-      roomId,
-      players,
-      name: roomDetails.name,
-      hasPassword,
-      status
-    }
-  };
-    gameRooms.forEach(player => player.removeClient(client));
-  };
-
-  function getGameRoomById(id) {
-    return gameRooms.get(id)
-  };
-
-  function serializeGameRooms() {
-    return Array.from(gameRooms.values())
-      .map(room => room.serialize());
-  };
-
-  function createGameRoom(game) {
-    gameRooms.set(game.id, GameRoom(game));
-  };
-
-  return {
     removeClient,
+    registerClient,
     getGameRoomById,
-    serializeGameRooms,
-    createGameRoom
+    createGameRoom,
+    removeGameRoom,
+    getPlayerByClientId,
+    joinGameRoom,
+    leaveRoom,
+    handleSetPlayerReady,
+    handleChipPlacement,
+    handleInGameChat
+    }
+    }
+
+interface Player {
+  win_streak: number;
+  wins: number; 
+  losses: number; 
+  player_name: string;
+  player_type: string;
+  _id: string;
+  inRoom?: string
   };
+
+interface SerializedRoom {
+  roomId: string;
+  players: Array<any>;
+  name: string;
+  hasPassword: boolean;
+  status: string;
 }
