@@ -27,9 +27,15 @@ function eventsManager(client: any, io: any) {
     handleInGameChat
   } = gameRoomManager;
   
-  client.emit('timer', client.id);
+  /// WORLD CHAT
+  client.on('join world chat', joinWorldChat);
 
-  client.on('register', handleRegister);
+  client.on('leave world chat', leaveWorldChat);
+
+  client.on('broadcast to world chat', broadcastMessage) 
+
+  client.on('get world chat players', getWorldChatPlayers);
+
 
   client.on('join', handleJoin);
 
