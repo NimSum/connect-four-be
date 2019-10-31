@@ -30,6 +30,19 @@ interface ReadyObject {
 class GameRoom {
   players: [Player, Player];
   roomDetails: object;
+  /// BROADCASTS
+  broadcastGameUpdate(payload: object) {
+    if (!this.players[0] && !this.players[1]) {
+      this.removeThisGameRoom();
+    } else {
+      this.players.forEach(player => {
+        if (player !== null) {
+          this.broadcast(player.clientId, payload);
+        }
+      });
+    }
+  };
+
   currentGrid: Grid;
   currentChat: Array<GameChat>;
   currentPlayer: number;
