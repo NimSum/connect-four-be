@@ -1,14 +1,11 @@
 export {};
 const GameRoom = require('./GameRoom');
-  function broadcastGameUpdate(clientId: string, payload: object) {
-    io.sockets.connected[clientId].emit('active game update', payload)
+  function sendAllGameRooms() {
+    io.sockets.connected[client.id]
+      .emit('send all game rooms', 
+        Array.from(gameRooms.values())
+        .map(room => serializeRoom(room)));
   };
-  };
-  const gameRooms = new Map(
-    mockGameRooms.map(game => [
-      game.id,
-      GameRoom(game)
-    ])
   );
 
   function removeClient(client) {
