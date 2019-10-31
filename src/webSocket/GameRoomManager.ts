@@ -2,25 +2,7 @@ export {};
 const GameRoom = require('./GameRoom');
 const uuidv4 = require('uuid/v4');
 const db = require('../db');
-      player.inRoom = roomId;
-      room.addPlayer(client.id, player);
-      const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
-      broadcastGameRoomUpdates(updateMessage);
-    }
-  };
-
-  function leaveRoom() {
-      }
-    }
-  };
-
-      }
-    }
-  };
-
-    const player: Player = getPlayerByClientId();
-    const room: any = getGameRoomById(player.inRoom);
-
+const { verifyToken } = require('../utils/jwtAuthentication');
 
 const gameRooms = new Map();
 const clients = new Map();
@@ -94,8 +76,18 @@ module.exports = function(client: any, io: any) {
     const room: any = getGameRoomById(roomId);
 
     if (room && room.roomDetails.password === password) {
-    const player = getPlayerByClientId();
-    const room = getGameRoomById(player.inRoom);
+      const player = getPlayerByClientId();
+      player.inRoom = roomId;
+      room.addPlayer(client.id, player);
+
+      const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
+      broadcastGameRoomUpdates(updateMessage);
+    }
+  };
+
+  function leaveRoom() {
+    const player: Player = getPlayerByClientId();
+    const room: any = getGameRoomById(player.inRoom);
 
     if (room && player) {
       player.inRoom = '';
@@ -103,22 +95,67 @@ module.exports = function(client: any, io: any) {
       if (!!room.players[0] || !!room.players[1]) {
         const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
         broadcastGameRoomUpdates(updateMessage);
+      }
+    }
+  };
+
   function removeGameRoom(roomId) {
     gameRooms.delete(roomId);
-      const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
+    
     const updateMessage = { roomId, updateType: 'deleteRoom'};
     broadcastGameRoomUpdates(updateMessage);
   };
 
   //// UTILITY
   function getGameRoomById(roomId: string): any {
+    return gameRooms.get(roomId) || false;
+  };
+
+  function serializeRoom(room: any): SerializedRoom {
+    const { roomId, players, roomDetails, status, hasPassword } = room;
+    return {
+      roomId,
+      players,
+      name: roomDetails.name,
+      hasPassword,
+      status
+    }
+  };
 
   function serializePlayer(player: any): Player {
     const { 
+      win_streak = null,
+      wins = null, 
+      losses = null, 
+      player_name,
+      player_type = 'registered',
+      _id
+    } = player;
+    
+    return {
+      win_streak,
+      wins,
+      losses,
+      player_name,
+      _id,
+      player_type
+    }
+  };
+
   function getPlayerByClientId(): Player {
     const player = clients.get(client.id) || false;
     return player;
-      losses = null, 
+  };
+
+  //// ACTIVE GAME ROOM
+  function handleSetPlayerReady(data: { isReady: boolean, chipColor: string}) {
+    const player = getPlayerByClientId();
+    const room = getGameRoomById(player.inRoom);
+    
+    if (room && player) {
+      room.setPlayerReady(data, client.id);
+    }
+  }
 
   function handleChipPlacement(xCoordinate: number) {
     const player: Player = getPlayerByClientId();
@@ -130,7 +167,7 @@ module.exports = function(client: any, io: any) {
   function handleInGameChat(payload: string) {
     const player: Player = getPlayerByClientId();
     const room = getGameRoomById(player.inRoom);
-    
+
     if (room && player) {
       const message = {
         player_name: player.player_name,
@@ -142,8 +179,7 @@ module.exports = function(client: any, io: any) {
     }
   }
 
-    
-    return {
+  return {
     removeClient,
     registerClient,
     getGameRoomById,
@@ -155,8 +191,8 @@ module.exports = function(client: any, io: any) {
     handleSetPlayerReady,
     handleChipPlacement,
     handleInGameChat
-    }
-    }
+  }
+}
 
 interface Player {
   win_streak: number;
@@ -166,7 +202,7 @@ interface Player {
   player_type: string;
   _id: string;
   inRoom?: string
-  };
+};
 
 interface SerializedRoom {
   roomId: string;
