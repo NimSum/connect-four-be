@@ -1,14 +1,20 @@
 export {};
 const GameRoom = require('./GameRoom');
-  function sendAllGameRooms() {
-    io.sockets.connected[client.id]
-      .emit('send all game rooms', 
-        Array.from(gameRooms.values())
-        .map(room => serializeRoom(room)));
-  };
-  );
+  function createGameRoom({ name, password }) {
+    const newId = uuidv4();
+    const player = getPlayerByClientId();
 
-  function removeClient(client) {
+    if (player) {
+      const newRoom = new GameRoom(newId, name, password || '', broadcastGameUpdate, removeGameRoom);
+    
+      player.inRoom = newId;
+      newRoom.addPlayer(client.id, player);
+      gameRooms.set(newId, newRoom);
+      
+      const updateMessage = {...serializeRoom(newRoom), updateType: 'addRoom'};
+      broadcastGameRoomUpdates(updateMessage);
+    }
+  };
     gameRooms.forEach(player => player.removeClient(client));
   };
 
