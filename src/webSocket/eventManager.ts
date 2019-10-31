@@ -3,20 +3,29 @@ export {};
 const createHandlers = require('./handlers');
 const ClientManager = require('./ClientManager');
 const GameRoomManager = require('./GameRoomManager');
+const WorldChatManager = require('./WorldChatManager');
 
-const clientManager = ClientManager();
-const gameRoomManager = GameRoomManager();
+function eventsManager(client: any, io: any) {
+  const worldChatManager = WorldChatManager(client, io);
+  const gameRoomManager = GameRoomManager(client, io);
 
-function eventsManager(client: any) {
   const {
-    handleRegister,
-    handleJoin,
-    handleLeave,
-    handleGridUpdate,
-    getGameRooms,
-    getAvailablePlayers,
-    handleDisconnect
-  } = createHandlers(client, clientManager, gameRoomManager)
+    joinWorldChat, 
+    leaveWorldChat,
+    getWorldChatPlayers,
+    broadcastMessage
+  } = worldChatManager;
+
+  const {
+    registerClient,
+    removeClient,
+    createGameRoom,
+    joinGameRoom,
+    leaveRoom,
+    handleSetPlayerReady,
+    handleChipPlacement,
+    handleInGameChat
+  } = gameRoomManager;
   
   client.emit('timer', client.id);
 
