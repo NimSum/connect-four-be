@@ -130,15 +130,40 @@ class GameRoom {
       loserStatUpdate(loser._id, opponent)
     };
   };
-          this.activeGameUpdate(true);
-          const loser = player.player_name === this.players[0].player_name
-            ? this.players[1]
-            : this.players[0];
-          this.gameOver(player, loser);
+
+  gameOver(winner: Player, loser: Player) {
+    const message = { message: `${winner.player_name} WINS!`, type: 'notification' };
+    const update = {
+      type: 'gameOver',
+      winner: winner.player_name,
+    };
+    this.updatePlayerStats(winner, loser);
+    this.broadcastGameUpdate(update);
+    this.broadcastMessage(message);
+
+    if (this.players[0] && this.players[1]) {
+      this.resetGame(false);
         } else {
-          this.switchPlayer();
+      this.resetGame(true);
         }
+  };
+
+  resetGame(playerLeft: boolean) {
+    this.currentGrid = new Grid();
+    this.currentPlayer = null;
+    this.prevSlot = [0, 0, 0];
+    this.players.forEach(player => {
+      if (player) {
+        player.isReady = false;
       }
+    });
+
+    if (playerLeft) {
+      this.status = 'waiting';
+      this.activeGameUpdate(false);
+    } else {
+      this.status = 'full';
+    };
     }
   };
 
