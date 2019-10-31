@@ -1,14 +1,25 @@
 export {};
 const GameRoom = require('./GameRoom');
-const uuidv4 = require('uuid/v4');
-const db = require('../db');
-const { verifyToken } = require('../utils/jwtAuthentication');
-
-const gameRooms = new Map();
-const clients = new Map();
+  async function registerClient(token: string) {
+    try {
+      const validToken = await verifyToken(`Bearer ${token}`);
+      if (validToken && !!validToken._id) {
+        const { _id } = validToken;
+        const player = await db.getPlayerById(_id);
+        if (player) {
+          clients.set(client.id, serializePlayer(player[0]));
+          console.log('Online: ' ,clients.size);
+        }
+        sendAllGameRooms();
+      } else {
+        clients.set(client.id, serializePlayer(validToken));
+        console.log('Online: ' ,clients.size);
+      }
+    } catch(err) {
+      io.sockets.connected[client.id]
+      .emit('socket has errored', {type: 'registration', error: 'Failed to register client'});
     }
-  ];
-
+  };
   const gameRooms = new Map(
     mockGameRooms.map(game => [
       game.id,
