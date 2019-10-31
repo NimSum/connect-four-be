@@ -1,7 +1,31 @@
-module.exports = function({ name, id }) {
-  const players = new Map<string, any>();
+export{};
 
-  let currentGrid: Array<number> = [];
+const Grid = require('./Grid');
+const { winnerStatUpdate, loserStatUpdate } = require('../db');
+
+interface GameChat {
+  player_name?: string,
+  timestamp?: number,
+  message: string,
+  type: string,
+}
+
+interface Player {
+  player_name: string,
+  _id: string,
+  exp: number,
+  iat: number,
+  clientId: string,
+  isReady: boolean;
+  inRoom: string;
+  chipColor: string;
+  player_type: string
+};
+
+interface ReadyObject {
+  isReady: boolean,
+  chipColor: string
+}
 
 class GameRoom {
   players: [Player, Player];
