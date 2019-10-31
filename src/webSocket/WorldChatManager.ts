@@ -13,6 +13,9 @@ module.exports = function(client: any, io: any) {
   }
   }
   
+  function broadcastToWorld(update: ChatHistoryItem | PlayerUpdate) {
+    io.to('world chat').emit('world chat update', update);
+  };
   
 
   return {
