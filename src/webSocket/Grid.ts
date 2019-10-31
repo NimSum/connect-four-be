@@ -68,3 +68,16 @@ class Grid {
     return false;
   };
 
+  insertChip(xCoordinate, player): [number, number, number] {
+    const x = this.gridX();
+    for (let y = x[xCoordinate].length - 1; y >= 0; y--) {
+      if (this.gridY[y][xCoordinate] === 0) {
+        this.gridY[y][xCoordinate] = player;
+        return [xCoordinate, y, player];
+        break;
+      }
+    }
+  };
+};
+
+module.exports = Grid;
