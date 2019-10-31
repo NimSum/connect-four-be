@@ -67,6 +67,19 @@ class GameRoom {
     this.prevSlot = [0, 0, 0];
   };
 
+  /// BROADCASTS
+  broadcastGameUpdate(payload: object) {
+    if (!this.players[0] && !this.players[1]) {
+      this.removeThisGameRoom();
+    } else {
+      this.players.forEach(player => {
+        if (player !== null) {
+          this.broadcast(player.clientId, payload);
+        }
+      });
+    }
+  };
+
   broadcastMessage(message: GameChat) {
     this.currentChat.push(message);
     this.broadcastGameUpdate(message);
@@ -82,7 +95,28 @@ class GameRoom {
           .insertChip(xCoorDinate, (this.currentPlayer + 1));
         this.prevSlot = coordinate;
 
-        if (this.currentGrid.checkWinner(this.currentPlayer + 1)) {
+  updatePlayerStats(winner: Player, loser: Player) {
+    if (winner.player_type === 'registered') {
+      const { player_name, _id = 'anonymous' } = loser;
+      const opponent = {
+        vs_player: player_name,
+        vs_player_id: _id,
+        created_at: new Date(),
+        is_winner: true
+      };
+      winnerStatUpdate(winner._id, opponent);
+    };
+    if (loser.player_type === 'registered') {
+      const { player_name, _id = 'anonymous' } = winner;
+      const opponent = {
+        vs_player: player_name,
+        vs_player_id: _id,
+        created_at: new Date(),
+        is_winner: false
+      };
+      loserStatUpdate(loser._id, opponent)
+    };
+  };
           this.activeGameUpdate(true);
           const loser = player.player_name === this.players[0].player_name
             ? this.players[1]
