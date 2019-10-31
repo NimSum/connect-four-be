@@ -256,26 +256,18 @@ class GameRoom {
     }
   };
 
+  removeThisGameRoom() {
+    this.deleteMe(this.roomId);
   };
 
-  function removePlayer(client) {
-    players.delete(client.id);
-  };
 
-  function serialize() {
-    return {
-      name,
-      id,
-      totalPlayers: players.size
-    };
-  };
-
-  return {
-    broadcastGrid,
-    updateCurrentGrid,
-    getCurrentGrid,
-    addPlayer,
-    removePlayer,
-    serialize
+  /// Utilities
+  findPlayerByClientId(clientId: string): number {
+    return this.players.findIndex(player => {
+      if (player !== null) return player.clientId === clientId;
+    });
   }
-};
+
+  }
+
+module.exports = GameRoom;
