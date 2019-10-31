@@ -127,9 +127,18 @@ module.exports = function(client: any, io: any) {
     if (room && player) room.insertChip(xCoordinate, client.id);
   }
 
+  function handleInGameChat(payload: string) {
+    const player: Player = getPlayerByClientId();
+    const room = getGameRoomById(player.inRoom);
     
     if (room && player) {
-      room.setPlayerReady(data, client.id);
+      const message = {
+        player_name: player.player_name,
+        timestamp: Date.now(),
+        message: payload,
+        type: 'message'
+      }
+      room.broadcastMessage(message);
     }
   }
 

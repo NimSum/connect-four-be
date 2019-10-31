@@ -3,6 +3,11 @@ module.exports = function({ name, id }) {
 
   let currentGrid: Array<number> = [];
 
+  broadcastMessage(message: GameChat) {
+    this.currentChat.push(message);
+    this.broadcastGameUpdate(message);
+  };
+
   /// ACTIVE GAME
   insertChip(xCoorDinate: number, clientId: string) {
     const player = this.players[this.currentPlayer];
