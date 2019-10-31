@@ -60,13 +60,13 @@ function eventsManager(client: any, io: any) {
   console.log(`Client connected... ${client.id}`);
 
   client.on('disconnect', () => {
-    // perform disconnect tasks here
-    console.log(`Client disconnect... ${client.id}`)
+    removeClient();
+    leaveWorldChat();
   });
 
   client.on('error', () => {
-    // perform error tasks here
-    console.log(`Client error... ${client.id}`)
+    removeClient();
+    leaveWorldChat();
   });
 };
 
