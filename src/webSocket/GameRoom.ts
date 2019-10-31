@@ -203,6 +203,15 @@ class GameRoom {
       }
     }
   };
+
+  startGame() {
+    this.currentPlayer = Math.round(Math.random());
+    this.status = 'active';
+    const { player_name } = this.players[this.currentPlayer];
+    const selectedMessage = { message: `${player_name} was selected to go first!`, type: 'notification' };
+
+    this.broadcastMessage(selectedMessage);
+    this.activeGameUpdate(true);
   };
 
   function updateCurrentGrid(grid: Array<number>) {
