@@ -84,3 +84,23 @@ module.exports = function(client: any, io: any) {
     broadcastMessage
   }
 };
+
+interface ChatHistoryItem {
+  player_name: string,
+  message: string,
+  timestamp?: number,
+  type?: string
+}
+
+interface PlayerUpdate {
+  player: Player,
+  type: string
+}
+
+interface Player {
+  player_name: string,
+  win_streak: number,
+  _id: string,
+  wins: number,
+  losses: number
+}
