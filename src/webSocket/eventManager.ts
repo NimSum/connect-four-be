@@ -1,7 +1,5 @@
 export {};
 
-const createHandlers = require('./handlers');
-const ClientManager = require('./ClientManager');
 const GameRoomManager = require('./GameRoomManager');
 const WorldChatManager = require('./WorldChatManager');
 
@@ -9,7 +7,7 @@ function eventsManager(client: any, io: any) {
   const worldChatManager = WorldChatManager(client, io);
   const gameRoomManager = GameRoomManager(client, io);
 
-  const {
+  const { 
     joinWorldChat, 
     leaveWorldChat,
     getWorldChatPlayers,
@@ -26,10 +24,10 @@ function eventsManager(client: any, io: any) {
     handleChipPlacement,
     handleInGameChat
   } = gameRoomManager;
-  
+
   /// WORLD CHAT
   client.on('join world chat', joinWorldChat);
-
+  
   client.on('leave world chat', leaveWorldChat);
 
   client.on('broadcast to world chat', broadcastMessage) 
@@ -52,11 +50,11 @@ function eventsManager(client: any, io: any) {
 
   /// ACTIVE GAME ROOM
   client.on('set player ready', handleSetPlayerReady);
-
+  
   client.on('place player chip', handleChipPlacement);
-  
+
   client.on('send in game message', handleInGameChat)
-  
+
   console.log(`Client connected... ${client.id}`);
 
   client.on('disconnect', () => {

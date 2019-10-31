@@ -30,19 +30,6 @@ interface ReadyObject {
 class GameRoom {
   players: [Player, Player];
   roomDetails: object;
-  /// BROADCASTS
-  broadcastGameUpdate(payload: object) {
-    if (!this.players[0] && !this.players[1]) {
-      this.removeThisGameRoom();
-    } else {
-      this.players.forEach(player => {
-        if (player !== null) {
-          this.broadcast(player.clientId, payload);
-        }
-      });
-    }
-  };
-
   currentGrid: Grid;
   currentChat: Array<GameChat>;
   currentPlayer: number;
@@ -143,9 +130,9 @@ class GameRoom {
 
     if (this.players[0] && this.players[1]) {
       this.resetGame(false);
-        } else {
+    } else {
       this.resetGame(true);
-        }
+    }
   };
 
   resetGame(playerLeft: boolean) {
@@ -164,7 +151,7 @@ class GameRoom {
     } else {
       this.status = 'full';
     };
-    }
+  }
 
   activeGameUpdate(isActive: boolean) {
     const active = {
@@ -172,7 +159,7 @@ class GameRoom {
       status: this.status,
       prevSlot: this.prevSlot,
       currentPlayer: this.players[this.currentPlayer] || null,
-  };
+    };
     const inactive = {
       type: 'inactiveUpdate',
       status: this.status,
@@ -181,13 +168,13 @@ class GameRoom {
 
     this.broadcastGameUpdate(isActive ? active : inactive);
   };
-    
+
   switchPlayer() {
     this.currentPlayer = this.currentPlayer === 0 
         ? 1
         : 0;
-          this.activeGameUpdate(true);
-        }
+    this.activeGameUpdate(true);
+  }
 
   /// GAME START
   setPlayerReady(data: ReadyObject, clientId: string) {
@@ -221,7 +208,7 @@ class GameRoom {
       ...player, 
       isReady: false, 
       chipColor: ''
-  };
+    };
 
     if (!this.players[0]) {
       this.players[0] = newPlayer;
@@ -260,7 +247,7 @@ class GameRoom {
     this.deleteMe(this.roomId);
   };
 
-
+  
   /// Utilities
   findPlayerByClientId(clientId: string): number {
     return this.players.findIndex(player => {
@@ -268,6 +255,6 @@ class GameRoom {
     });
   }
 
-  }
+}
 
 module.exports = GameRoom;
