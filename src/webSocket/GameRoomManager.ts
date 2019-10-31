@@ -1,14 +1,10 @@
 export {};
 const GameRoom = require('./GameRoom');
-  async function registerClient(token: string) {
-    try {
-      const validToken = await verifyToken(`Bearer ${token}`);
-      if (validToken && !!validToken._id) {
-        const { _id } = validToken;
-        const player = await db.getPlayerById(_id);
-        if (player) {
-          clients.set(client.id, serializePlayer(player[0]));
-          console.log('Online: ' ,clients.size);
+  function removeClient() {
+    leaveRoom();
+    clients.delete(client.id);
+    console.log('Online: ' ,clients.size);
+  };
         }
         sendAllGameRooms();
       } else {
