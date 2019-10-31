@@ -58,6 +58,22 @@ module.exports = function(client: any, io: any) {
     }
   };
 
+  function getWorldChatPlayers() {
+    io.sockets.connected[client.id].emit('send world chat players', Array.from(players.values()));
+  };
+
+  function checkIfAlreadyMem(player_name: string) {
+    return Array.from(players.values())
+      .some(player => player.player_name === player_name);
+  };
+
+  function getChatHistory(msgAmount: number): Array<ChatHistoryItem> {
+    const totalMessages: number = (chatContainer.length - msgAmount) > 0 
+      ? chatContainer.length - msgAmount
+      : 0;
+
+    return chatContainer.slice(totalMessages, chatContainer.length);
+  };
 
   return {
     broadcastToWorld,
