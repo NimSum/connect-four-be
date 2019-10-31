@@ -1,14 +1,11 @@
+export {};
 const GameRoom = require('./GameRoom');
+const uuidv4 = require('uuid/v4');
+const db = require('../db');
+const { verifyToken } = require('../utils/jwtAuthentication');
 
-module.exports = function() {
-  const mockGameRooms = [
-    {
-      name: 'Game Room 1',
-      id: '1'
-    },
-    {
-      name: 'Game Room 2',
-      id: '2'
+const gameRooms = new Map();
+const clients = new Map();
     }
   ];
 
