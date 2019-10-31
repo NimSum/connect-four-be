@@ -1,14 +1,18 @@
 export {};
 const GameRoom = require('./GameRoom');
-  function createGameRoom({ name, password }) {
-    const newId = uuidv4();
-    const player = getPlayerByClientId();
+  function joinGameRoom(details) {
+    const { roomId, password } = details;
+    const room = getGameRoomById(roomId);
 
-    if (player) {
-      const newRoom = new GameRoom(newId, name, password || '', broadcastGameUpdate, removeGameRoom);
-    
-      player.inRoom = newId;
-      newRoom.addPlayer(client.id, player);
+    if (room && room.roomDetails.password === password) {
+      const player = getPlayerByClientId();
+      player.inRoom = roomId;
+      room.addPlayer(client.id, player);
+
+      const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
+      broadcastGameRoomUpdates(updateMessage);
+    }
+  };
       gameRooms.set(newId, newRoom);
       
       const updateMessage = {...serializeRoom(newRoom), updateType: 'addRoom'};
