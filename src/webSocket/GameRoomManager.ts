@@ -1,6 +1,99 @@
 export {};
 const GameRoom = require('./GameRoom');
+const uuidv4 = require('uuid/v4');
+const db = require('../db');
+      player.inRoom = roomId;
+      room.addPlayer(client.id, player);
+      const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
+      broadcastGameRoomUpdates(updateMessage);
+    }
+  };
+
   function leaveRoom() {
+      }
+    }
+  };
+
+      }
+    }
+  };
+
+    const player: Player = getPlayerByClientId();
+    const room: any = getGameRoomById(player.inRoom);
+
+
+const gameRooms = new Map();
+const clients = new Map();
+
+module.exports = function(client: any, io: any) {
+  //// EMITTERS
+  function broadcastGameRoomUpdates(payload: object) {
+    io.sockets.emit('game rooms update', payload);
+  };
+
+  function sendAllGameRooms() {
+    io.sockets.connected[client.id]
+      .emit('send all game rooms', 
+        Array.from(gameRooms.values())
+        .map(room => serializeRoom(room)));
+  };
+
+  function broadcastGameUpdate(clientId: string, payload: object) {
+    io.sockets.connected[clientId].emit('active game update', payload)
+  };
+
+  //// CLIENT REGISTRATION
+  async function registerClient(token: string) {
+    try {
+      const validToken = await verifyToken(`Bearer ${token}`);
+      if (validToken && !!validToken._id) {
+        const { _id } = validToken;
+        const player = await db.getPlayerById(_id);
+        if (player) {
+          clients.set(client.id, serializePlayer(player[0]));
+          console.log('Online: ' ,clients.size);
+        }
+        sendAllGameRooms();
+      } else {
+        clients.set(client.id, serializePlayer(validToken));
+        console.log('Online: ' ,clients.size);
+      }
+    } catch(err) {
+      io.sockets.connected[client.id]
+      .emit('socket has errored', {
+        type: 'registration', 
+        error: 'Failed to register client'
+      });
+    }
+  };
+
+  function removeClient() {
+    leaveRoom();
+    clients.delete(client.id);
+    console.log('Online: ' ,clients.size);
+  };
+
+  //// ROOM INTERACTION
+  function createGameRoom({ name, password }: { name: string, password: string }) {
+    const newId: string = uuidv4();
+    const player: Player = getPlayerByClientId();
+
+    if (player) {
+      const newRoom= new GameRoom(newId, name, password || '', broadcastGameUpdate, removeGameRoom);
+      player.inRoom = newId;
+      newRoom.addPlayer(client.id, player);
+      gameRooms.set(newId, newRoom);
+      
+      const updateMessage = {...serializeRoom(newRoom), updateType: 'addRoom'};
+      broadcastGameRoomUpdates(updateMessage);
+    }
+  };
+
+  function joinGameRoom(details: { roomId: string, password: string }) {
+    const { roomId, password } = details;
+    const room: any = getGameRoomById(roomId);
+
+    if (room && room.roomDetails.password === password) {
     const player = getPlayerByClientId();
     const room = getGameRoomById(player.inRoom);
 
