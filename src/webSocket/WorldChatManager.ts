@@ -39,6 +39,25 @@ module.exports = function(client: any, io: any) {
     }
   };
 
+  function leaveWorldChat() {
+    const player: Player = players.get(client.id) || {};
+    const { player_name } = player;
+    const update = { type: 'player', update_type: 'delete', player };
+    const message: ChatHistoryItem = {
+      player_name,
+      message: `${player_name} has left the chat.`,
+      type: 'notification'
+    };
+    
+    if (!!player_name) {
+      players.delete(client.id);
+      broadcastToWorld(update);
+      broadcastToWorld(message);
+  
+      client.leave('world chat');
+    }
+  };
+
 
   return {
     broadcastToWorld,
