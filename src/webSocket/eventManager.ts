@@ -41,9 +41,15 @@ function eventsManager(client: any, io: any) {
 
   client.on('remove client', removeClient);
 
-  client.on('gridUpdate', handleGridUpdate);
+  /// GAME ROOM UPDATES
+  client.on('update the game', () => io.emit('game update'));
 
-  client.on('leave', handleLeave);
+  client.on('create game room', createGameRoom);
+
+  client.on('join game room', joinGameRoom);
+
+  client.on('leave game room', leaveRoom);
+
 
   client.on('gameRooms', getGameRooms);
   
