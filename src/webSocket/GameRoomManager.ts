@@ -10,14 +10,12 @@ const GameRoom = require('./GameRoom');
       if (!!room.players[0] || !!room.players[1]) {
         const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
         broadcastGameRoomUpdates(updateMessage);
-      }
+  function removeGameRoom(roomId) {
+    gameRooms.delete(roomId);
       const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
+    const updateMessage = { roomId, updateType: 'deleteRoom'};
+    broadcastGameRoomUpdates(updateMessage);
   };
-    }
-  };
-      gameRooms.set(newId, newRoom);
-      
-      const updateMessage = {...serializeRoom(newRoom), updateType: 'addRoom'};
       broadcastGameRoomUpdates(updateMessage);
     }
   };
