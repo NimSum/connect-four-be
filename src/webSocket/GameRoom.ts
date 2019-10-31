@@ -3,6 +3,33 @@ module.exports = function({ name, id }) {
 
   let currentGrid: Array<number> = [];
 
+class GameRoom {
+  players: [Player, Player];
+  roomDetails: object;
+  currentGrid: Grid;
+  currentChat: Array<GameChat>;
+  currentPlayer: number;
+  broadcast: Function;
+  status: string;
+  roomId: string;
+  deleteMe: Function;
+  hasPassword: Boolean;
+  prevSlot: [number, number, number];
+
+  constructor(roomId: string, name: string, password: string, broadcast: Function, deleteMe: Function) {
+    this.players = [null, null];
+    this.roomDetails = { name, password };
+    this.broadcast = broadcast;
+    this.currentGrid = new Grid();
+    this.currentChat = [];
+    this.currentPlayer = null;
+    this.status = '';
+    this.roomId = roomId;
+    this.deleteMe = deleteMe;
+    this.hasPassword = !!password.length;
+    this.prevSlot = [0, 0, 0];
+  };
+
   broadcastMessage(message: GameChat) {
     this.currentChat.push(message);
     this.broadcastGameUpdate(message);
