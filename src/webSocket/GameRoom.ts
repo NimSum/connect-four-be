@@ -95,6 +95,19 @@ class GameRoom {
           .insertChip(xCoorDinate, (this.currentPlayer + 1));
         this.prevSlot = coordinate;
 
+        if (this.currentGrid.checkWinner(this.currentPlayer + 1)) {
+          this.activeGameUpdate(true);
+          const loser = player.player_name === this.players[0].player_name
+            ? this.players[1]
+            : this.players[0];
+          this.gameOver(player, loser);
+        } else {
+          this.switchPlayer();
+        }
+      }
+    }
+  };
+
   updatePlayerStats(winner: Player, loser: Player) {
     if (winner.player_type === 'registered') {
       const { player_name, _id = 'anonymous' } = loser;
