@@ -165,25 +165,41 @@ class GameRoom {
       this.status = 'full';
     };
     }
+
+  activeGameUpdate(isActive: boolean) {
+    const active = {
+      type: 'activeUpdate',
+      status: this.status,
+      prevSlot: this.prevSlot,
+      currentPlayer: this.players[this.currentPlayer] || null,
   };
+    const inactive = {
+      type: 'inactiveUpdate',
+      status: this.status,
+      players: this.players
+    };
 
-    const player = this.players[this.currentPlayer];
+    this.broadcastGameUpdate(isActive ? active : inactive);
+  };
     
-    if (player) {
-      if (player.clientId === clientId) {
-        const coordinate: [number, number, number] = this.currentGrid
-          .insertChip(xCoorDinate, (this.currentPlayer + 1));
-        this.prevSlot = coordinate;
-
-        if (this.currentGrid.checkWinner(this.currentPlayer + 1)) {
+  switchPlayer() {
+    this.currentPlayer = this.currentPlayer === 0 
+        ? 1
+        : 0;
           this.activeGameUpdate(true);
-          const loser = player.player_name === this.players[0].player_name
-            ? this.players[1]
-            : this.players[0];
-          this.gameOver(player, loser);
-        } else {
-          this.switchPlayer();
         }
+
+  /// GAME START
+  setPlayerReady(data: ReadyObject, clientId: string) {
+    const idx: number = this.findPlayerByClientId(clientId);
+    const {chipColor, isReady} = data;
+    this.players[idx].isReady = isReady;
+    this.players[idx].chipColor = chipColor;
+    this.activeGameUpdate(false);
+
+    if (this.players[0] && this.players[1]) {
+      if (this.players[0].isReady && this.players[1].isReady) {
+        this.startGame();
       }
     }
   };
