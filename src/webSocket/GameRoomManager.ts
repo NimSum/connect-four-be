@@ -1,20 +1,8 @@
 export {};
 const GameRoom = require('./GameRoom');
-  function removeClient() {
-    leaveRoom();
-    clients.delete(client.id);
-    console.log('Online: ' ,clients.size);
+  function broadcastGameUpdate(clientId: string, payload: object) {
+    io.sockets.connected[clientId].emit('active game update', payload)
   };
-        }
-        sendAllGameRooms();
-      } else {
-        clients.set(client.id, serializePlayer(validToken));
-        console.log('Online: ' ,clients.size);
-      }
-    } catch(err) {
-      io.sockets.connected[client.id]
-      .emit('socket has errored', {type: 'registration', error: 'Failed to register client'});
-    }
   };
   const gameRooms = new Map(
     mockGameRooms.map(game => [
