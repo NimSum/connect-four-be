@@ -214,12 +214,27 @@ class GameRoom {
     this.activeGameUpdate(true);
   };
 
-  function updateCurrentGrid(grid: Array<number>) {
-    currentGrid = grid;
+  /// ROOM INTERACTION
+  addPlayer(clientId: string, player: any) {
+    const newPlayer = {
+      clientId, 
+      ...player, 
+      isReady: false, 
+      chipColor: ''
   };
 
-  function getCurrentGrid(): Array<number> {
-    return currentGrid.slice();
+    if (!this.players[0]) {
+      this.players[0] = newPlayer;
+      if (this.players[1]) this.status = 'full'
+      else this.status = 'waiting';
+      this.activeGameUpdate(false);
+    } else if (!this.players[1]) {
+      this.players[1] = newPlayer;
+      this.status = 'full';
+      this.activeGameUpdate(false);
+    }
+    
+    this.broadcastMessage({ message: `${newPlayer.player_name} has joined.`, type: 'notification' });
   };
 
   function addPlayer(client: any, player) {
