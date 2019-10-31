@@ -36,8 +36,10 @@ function eventsManager(client: any, io: any) {
 
   client.on('get world chat players', getWorldChatPlayers);
 
+  /// CLIENT REGISTRATION
+  client.on('register client', registerClient);
 
-  client.on('join', handleJoin);
+  client.on('remove client', removeClient);
 
   client.on('gridUpdate', handleGridUpdate);
 
