@@ -1,16 +1,18 @@
 export {};
 const GameRoom = require('./GameRoom');
-  function joinGameRoom(details) {
-    const { roomId, password } = details;
-    const room = getGameRoomById(roomId);
+  function leaveRoom() {
+    const player = getPlayerByClientId();
+    const room = getGameRoomById(player.inRoom);
 
-    if (room && room.roomDetails.password === password) {
-      const player = getPlayerByClientId();
-      player.inRoom = roomId;
-      room.addPlayer(client.id, player);
-
+    if (room && player) {
+      player.inRoom = '';
+      room.removePlayer(client.id);
+      if (!!room.players[0] || !!room.players[1]) {
+        const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
+        broadcastGameRoomUpdates(updateMessage);
+      }
       const updateMessage = {...serializeRoom(room), updateType: 'updateRoom'};
-      broadcastGameRoomUpdates(updateMessage);
+  };
     }
   };
       gameRooms.set(newId, newRoom);
