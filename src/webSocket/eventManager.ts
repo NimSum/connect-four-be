@@ -50,10 +50,12 @@ function eventsManager(client: any, io: any) {
 
   client.on('leave game room', leaveRoom);
 
+  /// ACTIVE GAME ROOM
+  client.on('set player ready', handleSetPlayerReady);
 
-  client.on('gameRooms', getGameRooms);
+  client.on('place player chip', handleChipPlacement);
   
-  client.on('availablePlayers', getAvailablePlayers);
+  client.on('send in game message', handleInGameChat)
   
   console.log(`Client connected... ${client.id}`);
 
