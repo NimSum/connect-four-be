@@ -119,10 +119,16 @@ module.exports = function(client: any, io: any) {
     const player = clients.get(client.id) || false;
     return player;
       losses = null, 
-      player_name,
-      player_type = 'registered',
-      _id
-    } = player;
+  //// ACTIVE GAME ROOM
+  function handleSetPlayerReady(data: { isReady: boolean, chipColor: string}) {
+    const player = getPlayerByClientId();
+    const room = getGameRoomById(player.inRoom);
+    
+    if (room && player) {
+      room.setPlayerReady(data, client.id);
+    }
+  }
+
     
     return {
       win_streak,
