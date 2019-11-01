@@ -1,5 +1,5 @@
 module.exports = <Key >{
-  mongoURI: process.env.MONGO_URI,
+  mongoURI: 'mongodb://localhost/connect_four',
   secretOrKey: process.env.SECRET_JWT_KEY
 };
 
