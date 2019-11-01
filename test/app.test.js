@@ -3,15 +3,18 @@ const { createNewPlayer, getPlayer } = require('../dist/src/db');
 const request = require('supertest');
 const mockData = require('./mockData');
 const { assert, expect } = require('chai');
+const mongoose = require('mongoose');
 
 describe('App', () => {
   const { newPlayer } = mockData;
-  after(() => {
-    app.close();
+  
+  after((done) => {
+    mongoose.connection.collections.players.drop(); 
+    done();
   });
 
   describe('POST /signup', () => {
-    it('responds with newly created player', () => {
+    it('responds with newly created player', (done) => {
       request(app)
         .post('/api/v1/signup')
         .send(newPlayer)
@@ -21,6 +24,7 @@ describe('App', () => {
         .end(function(err, res) {
           if (err) return console.log(err);
           assert.deepEqual(Object.keys(res.body), Object.keys(mockData.createdPlayer));
+          done()
         });
     });
     
@@ -37,13 +41,9 @@ describe('App', () => {
         });
     });
 
-    it('has does not allow duplicate players', async () => {
-      // cant make it work :/
-    });
-
   });
 
-  describe('POST /login', async () => {
+  describe('POST /login', async () => {a
     it('responds to valid email and password', () => {
       request(app)
         .post('/api/v1/login')
