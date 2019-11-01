@@ -19,8 +19,14 @@
   });
 
   router.post('/login', params.checkLoginParams, loginAuthentication, async (req:any, res:any) => {
-    const { player_name, email } = req.playerFound;
-    const token = await jwt.generateToken({ player_name, email });
+    const { player_name, _id } = req.playerFound;
+    try {
+      const token = await jwt.generateToken({ player_name, _id });
+      res.status(200).json({token, player: req.playerFound});
+    } catch(error) {
+      res.status(500).json(error)
+    }
+  });
 
   router.post('/anonymous', async (req:any, res:any) => {
     const { player_name } = req.body;
