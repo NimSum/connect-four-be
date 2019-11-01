@@ -1,3 +1,5 @@
 /node_modules
 
 /config/keys_dev.ts
+
+/dist
