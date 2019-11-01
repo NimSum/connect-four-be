@@ -37,6 +37,19 @@ async function getPlayer(isEmail: boolean, player: string) {
   return await Player.findOne({ [type]: player });
 };
 
+async function loserStatUpdate(id: string, opponent: Opponent) {
+  return await Player.findOneAndUpdate(
+    {_id: id}, 
+    {
+      $inc : {'games_played': 1, 'losses': 1},
+      $push: {'game_history': opponent},
+      'win_streak': 0,
+    }
+  );
+};
+
+
+
 module.exports = {
   createNewPlayer,
   getPlayer
