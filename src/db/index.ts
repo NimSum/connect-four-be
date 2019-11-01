@@ -37,6 +37,16 @@ async function getPlayer(isEmail: boolean, player: string) {
   return await Player.findOne({ [type]: player });
 };
 
+async function winnerStatUpdate(id: string, opponent: Opponent) {
+  return await Player.findOneAndUpdate(
+    {_id: id}, 
+    {
+      $inc : {'games_played': 1, 'wins': 1, 'win_streak': 1},
+      $push: {'game_history': opponent}
+    }
+  )
+};
+
 async function loserStatUpdate(id: string, opponent: Opponent) {
   return await Player.findOneAndUpdate(
     {_id: id}, 
