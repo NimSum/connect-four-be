@@ -5,12 +5,15 @@ const { mongoURI } = require('../../config/keys');
 const { Player } = require('./models');
 const { encryptText } = require('../utils/passwordEncryptions');
 
+const { ObjectId } = mongoose.Types;
+
 mongoose.connect(
   mongoURI,
   { 
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
   }
 ).catch((error: any) => {
     throw new Error(error)
@@ -35,6 +38,10 @@ async function createNewPlayer(player: Player) {
 async function getPlayer(isEmail: boolean, player: string) {
   const type: string = isEmail ? 'email' : 'player_name';
   return await Player.findOne({ [type]: player });
+};
+
+async function getPlayerById(id: string) {
+  return await Player.find(ObjectId(id));
 };
 
 async function winnerStatUpdate(id: string, opponent: Opponent) {
@@ -62,7 +69,10 @@ async function loserStatUpdate(id: string, opponent: Opponent) {
 
 module.exports = {
   createNewPlayer,
-  getPlayer
+  getPlayer,
+  getPlayerById,
+  winnerStatUpdate,
+  loserStatUpdate
 }
 
 interface Player {
