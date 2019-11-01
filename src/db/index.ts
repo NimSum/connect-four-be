@@ -49,3 +49,10 @@ interface Player {
   secret_one: string, 
   secret_two: string
 }
+
+interface Opponent {
+  vs_player: string,
+  vs_player_id: string,
+  is_winner: boolean,
+  created_at: string
+}

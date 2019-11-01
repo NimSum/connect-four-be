@@ -5,18 +5,18 @@ module.exports = function(client: any, io: any) {
   function broadcastMessage(message: string) {
     if (message.length > 0) {
       const { player_name } = players.get(client.id) || {};
-    const setMessage = { message, player_name, timestamp: Date.now() }
-    chatContainer.push(setMessage);
+      const setMessage = { message, player_name, timestamp: Date.now() }
+      chatContainer.push(setMessage);
 
-    const update: ChatHistoryItem = { type: 'message', ...setMessage };
-    broadcastToWorld(update);
-  }
+      const update: ChatHistoryItem = { type: 'message', ...setMessage };
+      broadcastToWorld(update);
+    }
   }
   
   function broadcastToWorld(update: ChatHistoryItem | PlayerUpdate) {
     io.to('world chat').emit('world chat update', update);
   };
-  
+
   function joinWorldChat(player: Player) {
     const { player_name = false } = player;
 
@@ -71,7 +71,7 @@ module.exports = function(client: any, io: any) {
     const totalMessages: number = (chatContainer.length - msgAmount) > 0 
       ? chatContainer.length - msgAmount
       : 0;
-
+      
     return chatContainer.slice(totalMessages, chatContainer.length);
   };
 
