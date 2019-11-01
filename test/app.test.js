@@ -1,5 +1,4 @@
 const app = require('../dist/src/app');
-const { createNewPlayer, getPlayer } = require('../dist/src/db');
 const request = require('supertest');
 const mockData = require('./mockData');
 const { assert, expect } = require('chai');
