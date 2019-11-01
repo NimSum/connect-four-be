@@ -2,21 +2,27 @@
   "name": "connect-four-be",
   "version": "1.0.0",
   "description": "Connect four backend using web sockets",
-  "main": "index.js",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NimSum/connect-four-be.git"
+  },
   "scripts": {
-    "test": "NODE_ENV=test mocha test/** --watch",
-    "start": "nodemon dist/src/app"
+    "test": "NODE_ENV=test mocha test/app.test.js --exit",
+    "start": "node dist/src/app"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.3",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

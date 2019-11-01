@@ -35,7 +35,7 @@ module.exports = {
   invalidLoginError: {
    error: 'Invalid login credentials'
   },
-  validToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJfbmFtZSI6Im5pbWRpbXN1bSIsImVtYWlsIjoibmltQHN1bS5jb20iLCJpYXQiOjE1NzA4MjY1Nzh9.O5oOD0OUjtZPSFjzp3fF1Z0Z9wVpjno9rAWrCq5RcGk',
+  validToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJfbmFtZSI6Im5pbWRpbXN1bSIsIl9pZCI6IjVkYTBiMjJjNGM1YjM1NjMwMDM5MDgyNiIsImlhdCI6MTU3MjU3ODMzOH0.ICrbRZpLvfeapYDJlMlsqmx46Cs1onnOTO0ehWryd7c',
   invalidToken: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF5ZXJfbmFtZSI6Im5pbWRpbXN1bSIsImVtYWlsIjoibmltQHN1bS5jb20iLCJpYXQiOjE1NzA4MjY1Nzh9.O5oOD0OUjtZPSFjzp3fF1Z0Z9wVpjno9rAWrCq5RcGs',
   invalidTokenError:  {
     "message": "invalid signature",

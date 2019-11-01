@@ -14,12 +14,13 @@ const playerSchema = new Schema({
   wins: { type: Number, default: 0 },
   losses: { type: Number, default: 0 },
   games_played: { type: Number, default: 0 },
-  friends: [Number],
+  friends: [String],
   achievements: [Number],
   game_history: [
     {
       vs_player: String,
-      is_winnder: Boolean,
+      vs_player_id: String,
+      is_winner: Boolean,
       created_at: Date
     }
   ]

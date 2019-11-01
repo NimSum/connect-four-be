@@ -4,14 +4,8 @@ const {  createNewPlayer, getPlayer } = require('../../dist/src/db');
 const mongoose = require('mongoose');
 
 describe('mongodb',() => {
-  let player;
-
-  beforeEach(async() => {
-    player = await createNewPlayer(newPlayer);  
-  });
-  
-
-  it('responds with new player', () => {
+  it('responds with new player', async() => {
+    const player = await createNewPlayer(newPlayer);  
     expect(player.player_name).to.equal(newPlayer.player_name); 
   });
   

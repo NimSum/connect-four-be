@@ -5,17 +5,18 @@ const { compareEncryptedText } = require('../../utils/passwordEncryptions')
 const { verifyToken } = require('../../utils/jwtAuthentication');
 
 async function loginAuthentication(req: any, res: any, next: any) {
-  let email: string;
+  let playerFound: any;
 
   try {
     if (!!req.headers.authorization) {
       const verified =  await verifyToken(req.headers.authorization);
-      email = verified.email;
+      const id: string = verified._id;
+      const found = await db.getPlayerById(id);
+      playerFound = found[0];
     } else {
-      email = req.body.email;
+      const email: string = req.body.email;
+      playerFound = await db.getPlayer(true, email)
     }
-
-    const playerFound = await db.getPlayer(true, email);
 
     if (!playerFound) {
       res.status(404).json({ error: 'Invalid login credentials' });
