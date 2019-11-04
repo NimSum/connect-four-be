@@ -4,11 +4,17 @@ const bodyParser = require('body-parser');
 const socket = require('socket.io');
 const eventManager = require('./webSocket/eventManager');
 const cors = require('cors');
+const fs = require('fs');
+const https = require('https');
 const app = express();
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')
+}, app);
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/v1', router);
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -16,7 +22,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
     res.status(200).json({ message: 'Connect four BE' });
 });
-const port = 443;
+const port = process.env.PORT || 3000;
 const server = app.listen(port, (err) => {
     if (err)
         throw err;

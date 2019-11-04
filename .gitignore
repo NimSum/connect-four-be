@@ -3,3 +3,6 @@
 /config/keys_dev.ts
 
 /src
+
+server.cert
+server.key
