@@ -7,10 +7,10 @@ const cors = require('cors');
 const fs = require('fs');
 const https = require('https');
 const app = express();
-https.createServer({
+const credentials = {
     key: fs.readFileSync('server.key'),
     cert: fs.readFileSync('server.cert')
-}, app);
+};
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/v1', router);
@@ -23,12 +23,13 @@ app.get("/", (req, res) => {
     res.status(200).json({ message: 'Connect four BE' });
 });
 const port = process.env.PORT || 3000;
-const server = app.listen(port, (err) => {
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(port, (err) => {
     if (err)
         throw err;
     console.log(`Listening to requests on port ${port}...`);
 });
-const io = socket(server);
+const io = socket(httpsServer);
 io.on('connection', (client) => {
     eventManager(client, io);
 });
