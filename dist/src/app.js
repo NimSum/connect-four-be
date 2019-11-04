@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
     res.status(200).json({ message: 'Connect four BE' });
 });
-const port = process.env.PORT || 3000;
+const port = 443;
 const server = app.listen(port, (err) => {
     if (err)
         throw err;
