@@ -18,15 +18,13 @@ function loginAuthentication(req, res, next) {
         try {
             if (!!req.headers.authorization) {
                 const verified = yield verifyToken(req.headers.authorization);
-                const id = verified._id;
-                const found = yield db.getPlayerById(id);
-                playerFound = found[0];
+                playerFound = yield db.getPlayerById(verified._id);
             }
             else {
                 const email = req.body.email;
                 playerFound = yield db.getPlayer(true, email);
             }
-            if (!playerFound) {
+            if (!playerFound._id) {
                 res.status(404).json({ error: 'Invalid login credentials' });
             }
             else {

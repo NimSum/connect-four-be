@@ -31,8 +31,8 @@ module.exports = function(client: any, io: any) {
       if (validToken && !!validToken._id) {
         const { _id } = validToken;
         const player = await db.getPlayerById(_id);
-        if (!!player.length) {
-          clients.set(client.id, serializePlayer(player[0]));
+        if (player._id) {
+          clients.set(client.id, serializePlayer(player))
           console.log('Online: ' ,clients.size);
         }
         sendAllGameRooms();

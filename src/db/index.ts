@@ -40,9 +40,7 @@ async function getPlayer(isEmail: boolean, player: string) {
 };
 
 async function getPlayerById(id: string) {
-  const player = await Player.find(ObjectId(id));
-  console.log(player[0]);
-  return await Player.find(ObjectId(id));
+  return await Player.findById(id);
 };
 
 async function winnerStatUpdate(id: string, opponent: Opponent) {
