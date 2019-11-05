@@ -46,6 +46,8 @@ function getPlayer(isEmail, player) {
 ;
 function getPlayerById(id) {
     return __awaiter(this, void 0, void 0, function* () {
+        const player = yield Player.find(ObjectId(id));
+        console.log(player[0]);
         return yield Player.find(ObjectId(id));
     });
 }
