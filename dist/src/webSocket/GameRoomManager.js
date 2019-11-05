@@ -36,12 +36,12 @@ module.exports = function (client, io) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const validToken = yield verifyToken(`Bearer ${token}`);
-                console.log(validToken);
                 if (validToken && !!validToken._id) {
                     const { _id } = validToken;
                     const player = yield db.getPlayerById(_id);
-                    console.log(player);
-                    if (player) {
+                    console.log(_id);
+                    if (!!player._id) {
+                        console.log(player);
                         clients.set(client.id, serializePlayer(player[0]));
                         console.log('Online: ', clients.size);
                     }

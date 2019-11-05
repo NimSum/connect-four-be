@@ -28,12 +28,12 @@ module.exports = function(client: any, io: any) {
   async function registerClient(token: string) {
     try {
       const validToken = await verifyToken(`Bearer ${token}`);
-      console.log(validToken);
       if (validToken && !!validToken._id) {
         const { _id } = validToken;
         const player = await db.getPlayerById(_id);
-        console.log(player);
-        if (player) {
+        console.log(_id);
+        if (!!player._id) {
+          console.log(player);
           clients.set(client.id, serializePlayer(player[0]));
           console.log('Online: ' ,clients.size);
         }
