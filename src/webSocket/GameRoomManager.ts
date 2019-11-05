@@ -143,6 +143,7 @@ module.exports = function(client: any, io: any) {
   };
 
   function getPlayerByClientId(): Player {
+    console.log(Array.from(clients.entries()));
     const player = clients.get(client.id) || false;
     return player;
   };
