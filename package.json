@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "NODE_ENV=test mocha test/app.test.js --exit",
-    "start": "node dist/src/app"
+    "start": "NODE_ENV=production node dist/src/app"
   },
   "author": "",
   "license": "ISC",

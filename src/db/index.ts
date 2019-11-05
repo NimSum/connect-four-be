@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const { mongoURI } = require('../../config/keys');
 const { Player } = require('./models');
 const { encryptText } = require('../utils/passwordEncryptions');
-
 const { ObjectId } = mongoose.Types;
 
 mongoose.connect(
