@@ -1,9 +1,8 @@
-### Front End Repo: https://github.com/NimSum/connect-four-fe
-
 # Connect-Four API
 An api created to store player stats, host players and global chat, connect 4 games and game rooms, chat history, etc for the connect 4 game app!
 
-#### [A Front-End app using this API](https://github.com/NimSum/connect-four-fe)
+Checkout the Front-end repo: https://github.com/NimSum/connect-four-fe
+View the app live at: https://nimsum.github.io/connect-four-fe/#/
 
 ## Table of contents
 * [Getting Started](#Getting-Started)
@@ -169,15 +168,23 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
 ---
 ## Future Plans
+[] Private Messaging
+[] Add friends
+[] Room Invites
+[] Password Resetsd
 
 ---
 ## Project Emphasis
+I created this app to challenge myself to learn new technologies such as Typescript, MongoDB, Socket.io and AWS. I gained a deeper understanding of using OOP principles in Node.js using Typescript which resulted in reduced complexity and better bug/error prevention. I also learned how to use AWS EC2 instances and to deploy the backend applications. 
 
-- [x] Typexcript
+### Back-end
+- [x] TypeScript
 - [x] Node.js/Express
-- [x] MongoDB
+- [x] Mocha
+- [x] Socket.io
+- [x] MongoDb
 - [x] Mongoose
 - [x] JWT Authentication
 - [x] Express Middleware
+- [x] AWS(EC2)
 - [x] Bcrypt
-- [ ] WebSockets
