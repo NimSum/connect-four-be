@@ -46,6 +46,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
   | `Authorization`| `Bearer <User Token Here>`| (NOTE: Required for User validation for updating user information) 
   
+--- 
    ### Signup
    ##### Method: `POST`
    ##### Path: `/api/v1/signup`
@@ -91,7 +92,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
       "error": "Missing: secret_one, secret_two"
   }
   ```
-  
+ ---  
  ### Login
  ##### Method: `POST`
  ##### Path: `/api/v1/login`
@@ -142,7 +143,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
     "error": "Invalid login credentials"
   }
   ```
-  
+ --- 
  ### Anonymous Login
  ##### Method: `POST`
  ##### Path: `/api/v1/anonymous`
@@ -166,10 +167,10 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   }
   ```
   
-
+---
 ## Future Plans
 
-
+---
 ## Project Emphasis
 
 - [x] Typexcript
