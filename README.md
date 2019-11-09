@@ -206,7 +206,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
 ---
 ### Websocket-Emitters
  ##### `game rooms update`: Sends information regarding game rooms
-   ```json
+   ```
     // 'create game room' response
     {
       roomId: string,
@@ -244,7 +244,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
     }
    ```
  ##### `send all game rooms`: Sends all game rooms
- ```json
+ ```
     // automatically triggered on 'register client'
     // Sends an array of rooms
     [
