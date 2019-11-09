@@ -182,18 +182,18 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
   | Type         | Description                                     |Required Payload | Possible Emitter Respons |
   | ------------ | ------------------------------------------------|-----------------|--------------------------|
-  | `join world chat`|                      x                              x           |          x                |
-  | `leave world chat`|                      x                      |       x          |           x               | 
-  | `broadcast to world chat`|                x                      |       x          |           x               |
-  | `get world chat players`|                  x                     |        x         |            x              |
+  | `join world chat`|     Add player to World Chat channel/room   |       None      |    `world chat update`   |
+  | `leave world chat`|  Removes player inside the World Chat channel/room|  None    |  `world chat update`     | 
+  | `broadcast to world chat`| Broadcasts a message to World Chat  | Message as a String|  `world chat update`    |
+  | `get world chat players`|  Triggers an emitter to send players |  None          |   `send world chat players`  |
   
-  **Game Room:**
+  **Game Rooms:**
   
-  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
-  | ------------ | ------------------------------------------------|-----------------|--------------------------|
-  | `create game room`|                         x                   |      x           |         x                 |
-  | `join game room`|                            x                  |       x          |          x                |
-  | `leave game room`|                            x                 |        x         |           x           |
+  | Type         | Description                      |Required Payload | Possible Emitter Respons |
+  | ------------ | ---------------------------------|-----------------|--------------------------|
+  | `create game room`| Creates a new game room    | ```{name: <String>, password: <String>}``` | `game rooms update` |
+  | `join game room`|  Joins a game room     |  ```{ roomId: <String>, password: <String> }``` |`game rooms update`, `active game update` |
+  | `leave game room`|   Leaves a game room       |  None    | `game rooms update`, `active game update`  |
   
   **Active Game Room:**
   
