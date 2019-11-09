@@ -170,7 +170,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
 ### Websocket-Listeners
   **Client Related:**
   
-  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | Type         | Description                                     |Required Payload | Possible Emitter Response |
   | ------------ | ------------------------------------------------|-----------------|--------------------------|
   | `connection` | Initiates client manager                        |  None           |       None               |
   | `disconnect` | When the connection is disconnected             |  None           |  `game rooms update`, `game rooms update`   |
@@ -180,7 +180,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
   **World Chat:**
   
-  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | Type         | Description                                     |Required Payload | Possible Emitter Response |
   | ------------ | ------------------------------------------------|-----------------|--------------------------|
   | `join world chat`|     Add player to World Chat channel/room   |       None      |    `world chat update`   |
   | `leave world chat`|  Removes player inside the World Chat channel/room|  None    |  `world chat update`     | 
@@ -189,19 +189,19 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
   **Game Rooms:**
   
-  | Type         | Description                      |Required Payload | Possible Emitter Respons |
+  | Type         | Description                      |Required Payload | Possible Emitter Response |
   | ------------ | ---------------------------------|-----------------|--------------------------|
-  | `create game room`| Creates a new game room    | ```{name: <String>, password: <String>}``` | `game rooms update` |
+  | `create game room`| Creates a new game room    | ```{ name: <String>, password: <String> }``` | `game rooms update` |
   | `join game room`|  Joins a game room     |  ```{ roomId: <String>, password: <String> }``` |`game rooms update`, `active game update` |
   | `leave game room`|   Leaves a game room       |  None    | `game rooms update`, `active game update`  |
   
   **Active Game Room:**
   
-  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | Type         | Description                                     |Required Payload | Possible Emitter Response |
   | ------------ | ------------------------------------------------|-----------------|--------------------------|
-  | `set player ready`|                   x                         |       x          |              x            |
-  | `place player chip`|                   x                        |        x         |               x           |
-  | `send in game message`|                 x                       |         x        |                x          |
+  | `set player ready`| Sets player ready, starts game if both ready  | ```{ isReady: <Boolean>, chipColor: <String> }```   |     `active game update`  |
+  | `place player chip`| Places "chip" to connect 4 grid            | Column Number: 0-6  |  `active game update`      |
+  | `send in game message`|  Sends an in game message             |  Message as a string  | `active game update`       |
   
 ---
 ### Websocket-Emitters
@@ -217,7 +217,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   | `send world chat players`|                 x                       |         x        | 
   
 ---
-## Future Plan
+## Future Plans/Features
 - Private Messaging
 - Add friends
 - Room Invites
