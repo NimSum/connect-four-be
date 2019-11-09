@@ -244,6 +244,19 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
     }
    ```
  ##### `send all game rooms`: Sends all game rooms
+ ```json
+    // automatically triggered on 'register client'
+    // Sends an array of rooms
+    [
+     {
+       roomId: string;
+       players: array;
+       name: string;
+       hasPassword: boolean;
+       status: string;
+      }
+    ]
+   ```
  ##### `active game update`: Sends current/active game updates that the client is in
  ##### `socket has errored`: Sends websocket error
  ##### `world chat update`: Sends world chat information
