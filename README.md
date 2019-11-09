@@ -191,30 +191,63 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
   | Type         | Description                      |Required Payload | Possible Emitter Response |
   | ------------ | ---------------------------------|-----------------|--------------------------|
-  | `create game room`| Creates a new game room    | ```{ name: <String>, password: <String> }``` | `game rooms update` |
-  | `join game room`|  Joins a game room     |  ```{ roomId: <String>, password: <String> }``` |`game rooms update`, `active game update` |
+  | `create game room`| Creates a new game room    | ```{ name: <String>, password: <string> }``` | `game rooms update` |
+  | `join game room`|  Joins a game room     |  ```{ roomId: <String>, password: <string> }``` |`game rooms update`, `active game update` |
   | `leave game room`|   Leaves a game room       |  None    | `game rooms update`, `active game update`  |
   
   **Active Game Room:**
   
   | Type         | Description                                     |Required Payload | Possible Emitter Response |
   | ------------ | ------------------------------------------------|-----------------|--------------------------|
-  | `set player ready`| Sets player ready, starts game if both ready  | ```{ isReady: <Boolean>, chipColor: <String> }```   |     `active game update`  |
+  | `set player ready`| Sets player ready, starts game if both ready  | ```{ isReady: <boolean>, chipColor: <string> }```   |     `active game update`  |
   | `place player chip`| Places "chip" to connect 4 grid            | Column Number: 0-6  |  `active game update`      |
   | `send in game message`|  Sends an in game message             |  Message as a string  | `active game update`       |
   
 ---
 ### Websocket-Emitters
-  
-  | Type         | Description                                     | Payload |
-  | ------------ | ------------------------------------------------|-----------------|
-  | `game rooms update`|                   x                        |        x         |  
-  | `send all game rooms`|                 x                       |         x        | 
-  | `active game update`|                   x                        |        x         |  
-  | `socket has errored`|                 x                       |         x        | 
-  | `active game update`|                   x                        |        x         |  
-  | `world chat update`|                 x                       |         x        | 
-  | `send world chat players`|                 x                       |         x        | 
+ ##### `game rooms update`: Sends information regarding game rooms
+   ```json
+    // 'create game room' response
+    {
+      roomId: string,
+      players: Array<any>,
+      name: string,
+      hasPassword: boolean,
+      status: string,
+      updateType: 'addRoom',
+    }
+    
+    // 'join game room' and 'leave game room' response
+    {
+      roomId: string,
+      players: array,
+      name: string,
+      hasPassword: boolean,
+      status: string,
+      updateType: 'updateRoom',
+    }
+    
+    // 'join game room' and 'leave game room' response
+    {
+      roomId: string,
+      players: Array<any>,
+      name: string,
+      hasPassword: boolean,
+      status: string,
+      updateType: 'updateRoom',
+    }
+    
+    // when a room has no players, it will automatically emit room deletion updates
+    {
+      roomId: string,
+      updateType: 'deleteRoom',
+    }
+   ```
+ ##### `send all game rooms`: Sends all game rooms
+ ##### `active game update`: Sends current/active game updates that the client is in
+ ##### `socket has errored`: Sends websocket error
+ ##### `world chat update`: Sends world chat information
+ ##### `send world chat players`: Sends all world chat players
   
 ---
 ## Future Plans/Features
