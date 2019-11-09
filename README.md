@@ -8,6 +8,8 @@ View the app live at: https://nimsum.github.io/connect-four-fe/#/
 * [Getting Started](#Getting-Started)
 * [Documentation](#Docs)
   * [Login/Signup](#User-Authentication)
+  * [Websocket - Listeners](#Websocket-Listeners)
+  * [Websocket - Emitters](#Websocket-Emitters)
 * [Project Emphasis](#Project-Emphasis)
 * [Future Plans](#Future-Plans) 
 
@@ -165,13 +167,61 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
     "error": "Name must be 3-15 characters"
   }
   ```
+### Websocket-Listeners
+  **Client Related:**
+  
+  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | ------------ | ------------------------------------------------|-----------------|--------------------------|
+  | `connection` | Initiates client manager                        |  None           |       None               |
+  | `disconnect` | When the connection is disconnected             |  None           |  `game rooms update`, `game rooms update`   |
+  | `error`   |  When the connection is severed                   | None           |  `game rooms update`, `game rooms update`    |
+  | `register client`| Register client in Game room manager        | Player Token(raw)| `send all game rooms`     |
+  | `remove client`|  Removes client from Game room manager        |        None      |   `game rooms update`     |
+  
+  **World Chat:**
+  
+  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | ------------ | ------------------------------------------------|-----------------|--------------------------|
+  | `join world chat`|                      x                              x           |          x                |
+  | `leave world chat`|                      x                      |       x          |           x               | 
+  | `broadcast to world chat`|                x                      |       x          |           x               |
+  | `get world chat players`|                  x                     |        x         |            x              |
+  
+  **Game Room:**
+  
+  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | ------------ | ------------------------------------------------|-----------------|--------------------------|
+  | `create game room`|                         x                   |      x           |         x                 |
+  | `join game room`|                            x                  |       x          |          x                |
+  | `leave game room`|                            x                 |        x         |           x           |
+  
+  **Active Game Room:**
+  
+  | Type         | Description                                     |Required Payload | Possible Emitter Respons |
+  | ------------ | ------------------------------------------------|-----------------|--------------------------|
+  | `set player ready`|                   x                         |       x          |              x            |
+  | `place player chip`|                   x                        |        x         |               x           |
+  | `send in game message`|                 x                       |         x        |                x          |
   
 ---
-## Future Plans
-[] Private Messaging
-[] Add friends
-[] Room Invites
-[] Password Resetsd
+### Websocket-Emitters
+  
+  | Type         | Description                                     | Payload |
+  | ------------ | ------------------------------------------------|-----------------|
+  | `game rooms update`|                   x                        |        x         |  
+  | `send all game rooms`|                 x                       |         x        | 
+  | `active game update`|                   x                        |        x         |  
+  | `socket has errored`|                 x                       |         x        | 
+  | `active game update`|                   x                        |        x         |  
+  | `world chat update`|                 x                       |         x        | 
+  | `send world chat players`|                 x                       |         x        | 
+  
+---
+## Future Plan
+- Private Messaging
+- Add friends
+- Room Invites
+- Password Resetsd
 
 ---
 ## Project Emphasis
