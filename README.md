@@ -205,9 +205,16 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
   
 ---
 ### Websocket-Emitters
- ##### `game rooms update`: Sends information regarding game rooms
+ #### `game rooms update`: Sends information regarding game rooms
+  | Update Type  |Description                  |  Triggered by client emitters:           |
+  | ------------ |---------------------------- |-------------------------------------------|
+  |   "addRoom   | Newly created room update | ```create game room```    |
+ |   "updateRoom"  | Updates about certain rooms, usually the status/players    | ```join game room```, ```leave game room```      |
+  |   "deleteRoom   | A room has been deleted in the server |  ```leave game room```(when no-one is inside)  |
+  
+  ##### Payload information: 
    ```
-    // 'create game room' response
+    // ADD ROOM
     {
       roomId: string,
       players: Array<any>,
@@ -217,7 +224,7 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
       updateType: 'addRoom',
     }
     
-    // 'join game room' and 'leave game room' response
+    // UPDATE ROOM
     {
       roomId: string,
       players: array,
@@ -227,25 +234,18 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
       updateType: 'updateRoom',
     }
     
-    // 'join game room' and 'leave game room' response
-    {
-      roomId: string,
-      players: Array<any>,
-      name: string,
-      hasPassword: boolean,
-      status: string,
-      updateType: 'updateRoom',
-    }
-    
+    // DELETE ROOM
     // when a room has no players, it will automatically emit room deletion updates
     {
       roomId: string,
       updateType: 'deleteRoom',
     }
    ```
- ##### `send all game rooms`: Sends all game rooms
+ #### `send all game rooms`: Sends all game rooms
+ 
+ ##### Payload information:
  ```
-    // automatically triggered on 'register client'
+    // automatically triggered when client emits 'register client'
     // Sends an array of rooms
     [
      {
@@ -254,17 +254,82 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
        name: string;
        hasPassword: boolean;
        status: string;
-      }
+      },
+      ...
     ]
    ```
- ##### `active game update`: Sends current/active game updates that the client is in
- ##### `socket has errored`: Sends websocket error
- ##### `world chat update`: Sends world chat information
- ##### `send world chat players`: Sends all world chat players
+   
+ #### `active game update`: Sends current/active game updates that the client is in
+   | Update Type  |Description                               |        Triggered by client emitters:           |
+   | ------------ |------------------------------------------|-------------------------------------------------|
+   |   "activeUpdate| Updates during an active game(chip placement phase) | ```place player chip```, ```set player ready```(conditional)    |
+   |   "inactiveUpdate" | Updates during in inactive game|```set player ready```, ```join game room```, ```leave game room```, ```place player chip```(game over)|
+   |   "message   | A new message has been created/send | ```send in game message``` |
+   |   "notification"  | Server updates like player joining/leaving/first turn selection  | ```set player ready```, ```join game room```, ```leave game room```, ```place player chip```(game over)     |
+   |   "gameOver   | The game is over, a winner has been decided |  ```place player chip```(when chip slot connects 4) |
+  
+ ##### Payload information:
+  ```
+    // Active Update
+     {
+       type: 'activeUpdate',
+       status: 'active',
+       prevSlot: [1, 0, 1],
+       currentPlayer: {<PLAYER OBJECT>},
+      }
+    
+    // Inactive Update
+    // triggered mostly by client '', '', '', or ''(game over)
+     {
+       type: 'activeUpdate',
+       status: 'full',
+       players: [ <{PLAYER OBJECT or null}>, <{PLAYER OBJECT or null}> ]
+      }
+      
+    // Message Update
+     {
+        player_name: 'nimsum',
+        timestamp: 1519211809934,
+        message: 'Hi there, stranger',
+        type: 'message'
+      }  
+      
+    // Notification Update
+    // triggered by client 
+     {
+        message: 'nimsum was selected to go first!',
+        type: 'notification'
+      } 
+    
+    // Game Over Update
+     {
+        winner: 'nimsum',
+        type: 'gameOver'
+      } 
+   ```
+   
+ #### `socket has errored`: Sends websocket error
+   | Update Type  |Description                               |        Triggered by client emitters:           |
+   | ------------ |------------------------------------------|-------------------------------------------------|
+   |   "activeUpdate| Updates during an active game(chip placement phase) | ```register client```(currently)       |
+   
+   ##### Payload information:
+   ```
+   // Game Over Update
+    {
+       type: 'registration', 
+       error: 'Failed to register client'
+    } 
+   ```
+   
+ #### `world chat update`: Sends world chat information (Documentation in progress)
+ 
+ #### `send world chat players`: Sends all world chat players (Documentation in progress)
   
 ---
 ## Future Plans/Features
 - Private Messaging
+- Show user stats
 - Add friends
 - Room Invites
 - Password Resetsd
