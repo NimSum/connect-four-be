@@ -1,8 +1,8 @@
 # Connect-Four API
 An api created to store player stats, host players and global chat, connect 4 games and game rooms, chat history, etc for the connect 4 game app!
 
-Checkout the Front-end repo: https://github.com/NimSum/connect-four-fe
-View the app live at: https://nimsum.github.io/connect-four-fe/#/
+- **Checkout the Front-end Source Code and Docs: https://github.com/NimSum/connect-four-fe**
+- **View the app live at: https://nimsum.github.io/connect-four-fe/#/**
 
 ## Table of contents
 * [Getting Started](#Getting-Started)
@@ -208,9 +208,9 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
  #### `game rooms update`: Sends information regarding game rooms
   | Update Type  |Description                  |  Triggered by client emitters:           |
   | ------------ |---------------------------- |-------------------------------------------|
-  |   "addRoom   | Newly created room update | ```create game room```    |
+  |   "addRoom"   | Newly created room update | ```create game room```    |
  |   "updateRoom"  | Updates about certain rooms, usually the status/players    | ```join game room```, ```leave game room```      |
-  |   "deleteRoom   | A room has been deleted in the server |  ```leave game room```(when no-one is inside)  |
+  |   "deleteRoom"   | A room has been deleted in the server |  ```leave game room```(when no-one is inside)  |
   
   ##### Payload information: 
    ```
@@ -262,11 +262,11 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
  #### `active game update`: Sends current/active game updates that the client is in
    | Update Type  |Description                               |        Triggered by client emitters:           |
    | ------------ |------------------------------------------|-------------------------------------------------|
-   |   "activeUpdate| Updates during an active game(chip placement phase) | ```place player chip```, ```set player ready```(conditional)    |
+   |   "activeUpdate"| Updates during an active game(chip placement phase) | ```place player chip```, ```set player ready```(conditional)    |
    |   "inactiveUpdate" | Updates during in inactive game|```set player ready```, ```join game room```, ```leave game room```, ```place player chip```(game over)|
-   |   "message   | A new message has been created/send | ```send in game message``` |
+   |   "message"   | A new message has been created/send | ```send in game message``` |
    |   "notification"  | Server updates like player joining/leaving/first turn selection  | ```set player ready```, ```join game room```, ```leave game room```, ```place player chip```(game over)     |
-   |   "gameOver   | The game is over, a winner has been decided |  ```place player chip```(when chip slot connects 4) |
+   |   "gameOver"   | The game is over, a winner has been decided |  ```place player chip```(when chip slot connects 4) |
   
  ##### Payload information:
   ```
@@ -311,20 +311,76 @@ Then, go to `http://localhost:3000/` in your browser to check if the server is r
  #### `socket has errored`: Sends websocket error
    | Update Type  |Description                               |        Triggered by client emitters:           |
    | ------------ |------------------------------------------|-------------------------------------------------|
-   |   "activeUpdate| Updates during an active game(chip placement phase) | ```register client```(currently)       |
+   | "registration" | Error during client registration process | ```register client```                       |
    
    ##### Payload information:
    ```
-   // Game Over Update
+   // Registration Error
     {
        type: 'registration', 
        error: 'Failed to register client'
     } 
+   ``` 
+   
+ #### `world chat update`: Sends world chat information
+   | Update Type  |Description                               |        Triggered by client emitters:           |
+   | ------------ |------------------------------------------|-------------------------------------------------|
+   |  "notification" | Updates during joining/leaving world chat | ```join world chat```, ```leave world chat```  |
+   | "player" | A new player has joined | ```join world chat```  |
+   | "player" - "delete" | A player has left | ```leave world chat```  |
+   |  "message" | A user has sent a message to world chat | ```broadcast to world chat```  |
+
+   
+   ##### Payload information:
+   ```
+   // Player Object Props: 
+   {
+     player_name: <string>, 
+     win_streak: <number>, 
+     _id: <string>, 
+     wins: <number>, 
+     losses: <number>
+   }
+   
+   // Notification (Join/Leave)
+    {
+       player_name: nimsum,
+       message: `nimsum has joined the chat!`,
+       type: 'notification'
+    }
+    
+   // New Message
+    {
+       message: "Hello world!", 
+       player_name: "nimsum", 
+       timestamp: 1573842283605,
+       type: "message"
+    }
+    
+    // New Player
+    { 
+      type: 'player',
+      player: {<PLAYER OBJECT>}
+    }
+    
+    // Delete Player
+    { 
+      type: 'player',
+      update_type: 'delete',
+      player: {<PLAYER OBJECT>}
+    }
    ```
    
- #### `world chat update`: Sends world chat information (Documentation in progress)
- 
  #### `send world chat players`: Sends all world chat players (Documentation in progress)
+ ##### Payload information:
+   ```
+    // An array of Player Objects
+    [
+      {<PLAYER OBJECT>},
+      {<PLAYER OBJECT>},
+      {<PLAYER OBJECT>},
+    ]
+   ```
   
 ---
 ## Future Plans/Features
