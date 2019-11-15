@@ -1,8 +1,8 @@
 # Connect-Four API
 An api created to store player stats, host players and global chat, connect 4 games and game rooms, chat history, etc for the connect 4 game app!
 
-Checkout the Front-end repo: https://github.com/NimSum/connect-four-fe
-View the app live at: https://nimsum.github.io/connect-four-fe/#/
+- **Checkout the Front-end Source Code and Docs: https://github.com/NimSum/connect-four-fe**
+- **View the app live at: https://nimsum.github.io/connect-four-fe/#/**
 
 ## Table of contents
 * [Getting Started](#Getting-Started)
