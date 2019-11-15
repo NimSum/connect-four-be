@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 mongoose.Promise = global.Promise;
 
 after(() => {
-  mongoose.connection.collections.players.drop(); 
+	mongoose.connection.collections.players.drop();
 });
