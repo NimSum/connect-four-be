@@ -1,71 +1,67 @@
 export {};
 
-const GameRoomManager = require('./GameRoomManager');
-const WorldChatManager = require('./WorldChatManager');
+const GameRoomManager = require("./GameRoomManager");
+const WorldChatManager = require("./WorldChatManager");
 
 function eventsManager(client: any, io: any) {
-  const worldChatManager = WorldChatManager(client, io);
-  const gameRoomManager = GameRoomManager(client, io);
+	const worldChatManager = WorldChatManager(client, io);
+	const gameRoomManager = GameRoomManager(client, io);
 
-  const { 
-    joinWorldChat, 
-    leaveWorldChat,
-    getWorldChatPlayers,
-    broadcastMessage
-  } = worldChatManager;
+	const {
+		joinWorldChat,
+		leaveWorldChat,
+		getWorldChatPlayers,
+		broadcastMessage
+	} = worldChatManager;
 
-  const {
-    registerClient,
-    removeClient,
-    createGameRoom,
-    joinGameRoom,
-    leaveRoom,
-    handleSetPlayerReady,
-    handleChipPlacement,
-    handleInGameChat
-  } = gameRoomManager;
+	const {
+		registerClient,
+		removeClient,
+		createGameRoom,
+		joinGameRoom,
+		leaveRoom,
+		handleSetPlayerReady,
+		handleChipPlacement,
+		handleInGameChat
+	} = gameRoomManager;
 
-  /// WORLD CHAT
-  client.on('join world chat', joinWorldChat);
-  
-  client.on('leave world chat', leaveWorldChat);
+	client.on("join world chat", joinWorldChat);
 
-  client.on('broadcast to world chat', broadcastMessage) 
+	client.on("leave world chat", leaveWorldChat);
 
-  client.on('get world chat players', getWorldChatPlayers);
+	client.on("broadcast to world chat", broadcastMessage);
 
-  /// CLIENT REGISTRATION
-  client.on('register client', registerClient);
+	client.on("get world chat players", getWorldChatPlayers);
 
-  client.on('remove client', removeClient);
+	client.on("register client", registerClient);
 
-  /// GAME ROOM UPDATES
-  client.on('update the game', () => io.emit('game update'));
+	client.on("remove client", removeClient);
 
-  client.on('create game room', createGameRoom);
+	client.on("update the game", () => io.emit("game update"));
 
-  client.on('join game room', joinGameRoom);
+	client.on("create game room", createGameRoom);
 
-  client.on('leave game room', leaveRoom);
+	client.on("join game room", joinGameRoom);
 
-  /// ACTIVE GAME ROOM
-  client.on('set player ready', handleSetPlayerReady);
-  
-  client.on('place player chip', handleChipPlacement);
+	client.on("leave game room", leaveRoom);
 
-  client.on('send in game message', handleInGameChat)
+	client.on("set player ready", handleSetPlayerReady);
 
-  console.log(`Client connected... ${client.id}`);
+	client.on("place player chip", handleChipPlacement);
 
-  client.on('disconnect', () => {
-    removeClient();
-    leaveWorldChat();
-  });
+	client.on("send in game message", handleInGameChat);
 
-  client.on('error', () => {
-    removeClient();
-    leaveWorldChat();
-  });
-};
+	console.log(`Client connected... ${client.id}`);
+
+	client.on("disconnect", () => {
+		removeClient();
+		leaveWorldChat();
+	});
+
+	client.on("error", () => {
+		removeClient();
+		leaveWorldChat();
+	});
+}
 
 module.exports = eventsManager;
